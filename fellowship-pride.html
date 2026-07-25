@@ -392,6 +392,14 @@
       margin-top: 1px;
     }
 
+    .event-location a {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 2px;
+    }
+    .event-location a:hover { opacity: .75; }
+
     /* Empty state */
     .empty-state {
       text-align: center;
@@ -1155,7 +1163,7 @@ function renderEvents() {
   list.innerHTML = events.map(e => {
     const timeEndStr = e.timeEnd ? `<div class="event-time-end">${e.timeEnd}</div>` : "";
     const locStr = e.location
-      ? `<div class="event-location">${PIN_SVG} <span>${e.location}</span></div>`
+      ? `<div class="event-location">${PIN_SVG} <a href="https://maps.google.com/?q=${encodeURIComponent(e.location)}" target="_blank" rel="noopener noreferrer">${e.location}</a></div>`
       : "";
     return `
       <div class="event-card cat-${e.category}">

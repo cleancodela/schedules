@@ -271,6 +271,13 @@
       display: flex; align-items: flex-start; gap: 4px; line-height: 1.4;
     }
     .event-location svg { flex-shrink: 0; margin-top: 1px; }
+    .event-location a {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 2px;
+    }
+    .event-location a:hover { opacity: .75; }
     .event-transit  { font-size: 11px; color: var(--text-muted); margin-top: 4px; line-height: 1.5; }
 
     /* Empty state */
@@ -734,7 +741,13 @@ function renderEvents() {
     const badge   = isReq ? "★ Required" : "Not Required";
     const timeEnd = e.timeEnd ? '<div class="event-time-end">' + e.timeEnd + '</div>' : "";
     const loc     = e.location
-      ? '<div class="event-location">' + PIN_SVG + ' <span>' + e.location.replace(/\n/g, "<br>") + '</span></div>'
+      ? (function() {
+          var parts = e.location.split('\n');
+          var addr  = parts[0];
+          var extra = parts.slice(1).join('<br>');
+          var linked = '<a href="https://maps.google.com/?q=' + encodeURIComponent(addr) + '" target="_blank" rel="noopener noreferrer">' + addr + '</a>';
+          return '<div class="event-location">' + PIN_SVG + ' <span>' + linked + (extra ? '<br><span style="text-decoration:none">' + extra + '</span>' : '') + '</span></div>';
+        })()
       : "";
     return (
       '<div class="event-card cat-' + e.category + '">' +
