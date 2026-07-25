@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Amsterdam WorldPride 2026 — Schedule</title>
+  <style>
+    /* ────────── CSS Custom Properties ────────── */
+    :root {
+      --fellowship:        #7c3aed;
+      --fellowship-bg:     #ede9fe;
+      --fellowship-border: #7c3aed;
+
+      --workshop:          #1d4ed8;
+      --workshop-bg:       #dbeafe;
+      --workshop-border:   #1d4ed8;
+
+      --official:          #be185d;
+      --official-bg:       #fce7f3;
+      --official-border:   #be185d;
+
+      --excursion:         #047857;
+      --excursion-bg:      #d1fae5;
+      --excursion-border:  #047857;
+
+      --optional:          #b45309;
+      --optional-bg:       #fef3c7;
+      --optional-border:   #b45309;
+
+      --selfpay:           #0f766e;
+      --selfpay-bg:        #ccfbf1;
+      --selfpay-border:    #0f766e;
+
+      --surface:    #ffffff;
+      --bg:         #f4f4f5;
+      --text:       #18181b;
+      --text-muted: #71717a;
+      --border:     #e4e4e7;
+      --radius:     12px;
+      --radius-sm:  6px;
+    }
+
+    /* ────────── Reset & Base ────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    /* ────────── Header / Logo ────────── */
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 20px 16px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg,
+        rgba(239,68,68,.25) 0%,
+        rgba(249,115,22,.25) 16%,
+        rgba(234,179,8,.25)  33%,
+        rgba(34,197,94,.25)  50%,
+        rgba(59,130,246,.25) 66%,
+        rgba(99,102,241,.25) 83%,
+        rgba(168,85,247,.25) 100%);
+      pointer-events: none;
+    }
+
+    .logo-box {
+      position: relative;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .logo-flag {
+      font-size: 36px;
+      line-height: 1;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,.4));
+    }
+
+    .logo-title {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #fff;
+      text-shadow: 0 1px 6px rgba(0,0,0,.5);
+    }
+
+    .logo-subtitle {
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255,255,255,.75);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    /* ────────── Sticky Controls ────────── */
+    .controls {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+
+    /* Day scroller */
+    .day-scroller-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding: 12px 16px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .day-scroller-wrap::-webkit-scrollbar { display: none; }
+
+    .day-scroller {
+      display: flex;
+      gap: 6px;
+      width: max-content;
+    }
+
+    .day-btn {
+      flex-shrink: 0;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 99px;
+      padding: 7px 14px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      line-height: 1;
+      transition: all .15s ease;
+      white-space: nowrap;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1px;
+    }
+
+    .day-btn .btn-weekday {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+
+    .day-btn .btn-date {
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .day-btn:hover {
+      border-color: #a855f7;
+      color: #a855f7;
+      background: #faf5ff;
+    }
+
+    .day-btn.active {
+      background: linear-gradient(135deg, #7c3aed, #be185d);
+      border-color: transparent;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(124,58,237,.4);
+    }
+
+    /* Category filter row */
+    .filter-row {
+      padding: 10px 16px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .filter-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      white-space: nowrap;
+    }
+
+    .cat-select {
+      flex: 1;
+      appearance: none;
+      -webkit-appearance: none;
+      background: var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 8px 32px 8px 12px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      transition: border-color .15s;
+    }
+
+    .cat-select:focus {
+      outline: none;
+      border-color: #7c3aed;
+      box-shadow: 0 0 0 3px rgba(124,58,237,.12);
+    }
+
+    /* ────────── Day Theme Banner ────────── */
+    .day-theme {
+      padding: 10px 16px 2px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .day-theme-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .day-theme-name {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text);
+      margin-top: 2px;
+    }
+
+    .day-theme-date {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* ────────── Event List ────────── */
+    .event-list {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 12px 12px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .event-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+      overflow: hidden;
+      display: flex;
+      border: 1px solid var(--border);
+      transition: box-shadow .15s, transform .15s;
+    }
+
+    .event-card:active {
+      transform: scale(0.99);
+    }
+
+    /* Left color accent bar */
+    .event-accent {
+      width: 4px;
+      flex-shrink: 0;
+      border-radius: var(--radius) 0 0 var(--radius);
+    }
+
+    .event-card.cat-fellowship    .event-accent { background: var(--fellowship); }
+    .event-card.cat-workshop      .event-accent { background: var(--workshop); }
+    .event-card.cat-official      .event-accent { background: var(--official); }
+    .event-card.cat-excursion     .event-accent { background: var(--excursion); }
+    .event-card.cat-optional      .event-accent { background: var(--optional); }
+    .event-card.cat-selfpay       .event-accent { background: var(--selfpay); }
+
+    /* Time column */
+    .event-time {
+      flex-shrink: 0;
+      width: 72px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 14px 8px 14px 10px;
+    }
+
+    .event-time-inner {
+      text-align: center;
+    }
+
+    .event-time-start {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .event-time-end {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      white-space: nowrap;
+    }
+
+    /* Divider */
+    .event-divider {
+      width: 1px;
+      background: var(--border);
+      margin: 10px 0;
+    }
+
+    /* Body */
+    .event-body {
+      flex: 1;
+      padding: 12px 14px 12px 12px;
+      min-width: 0;
+    }
+
+    .event-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 99px;
+      margin-bottom: 6px;
+    }
+
+    .event-card.cat-fellowship .event-badge {
+      background: var(--fellowship-bg); color: var(--fellowship);
+    }
+    .event-card.cat-workshop .event-badge {
+      background: var(--workshop-bg); color: var(--workshop);
+    }
+    .event-card.cat-official .event-badge {
+      background: var(--official-bg); color: var(--official);
+    }
+    .event-card.cat-excursion .event-badge {
+      background: var(--excursion-bg); color: var(--excursion);
+    }
+    .event-card.cat-optional .event-badge {
+      background: var(--optional-bg); color: var(--optional);
+    }
+    .event-card.cat-selfpay .event-badge {
+      background: var(--selfpay-bg); color: var(--selfpay);
+    }
+
+    .event-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+
+    .event-desc {
+      font-size: 13px;
+      color: #52525b;
+      line-height: 1.5;
+      margin-bottom: 6px;
+    }
+
+    .event-location {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 4px;
+      line-height: 1.4;
+    }
+
+    .event-location svg {
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--text-muted);
+    }
+
+    .empty-state-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    .empty-state-text {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .empty-state-sub {
+      font-size: 14px;
+      margin-top: 4px;
+      opacity: .7;
+    }
+
+    /* ────────── Legend (Desktop helper) ────────── */
+    .legend {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 12px 4px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .legend-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+
+    /* ────────── Desktop tweaks ────────── */
+    @media (min-width: 600px) {
+      .header { padding: 28px 24px 32px; }
+      .logo-title { font-size: 22px; }
+      .day-scroller-wrap { padding: 14px 24px 12px; }
+      .filter-row { padding: 10px 24px 14px; }
+      .event-list { padding: 14px 16px 48px; gap: 10px; }
+      .day-theme { padding: 14px 16px 4px; }
+      .event-time { width: 80px; }
+      .event-time-start { font-size: 13px; }
+      .event-desc { font-size: 14px; }
+      .event-title { font-size: 15px; }
+      .event-location { font-size: 12px; }
+      .legend { padding: 0 16px 6px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="logo-box">
+    <div class="logo-flag">🏳️‍🌈</div>
+    <div class="logo-title">Amsterdam WorldPride 2026</div>
+    <div class="logo-subtitle">Fellow‑Ship Travel Guide</div>
+  </div>
+</header>
+
+<!-- Sticky Controls -->
+<div class="controls">
+  <div class="day-scroller-wrap">
+    <div class="day-scroller" id="dayScroller"></div>
+  </div>
+  <div class="filter-row">
+    <span class="filter-label">Filter</span>
+    <select class="cat-select" id="catSelect"></select>
+  </div>
+</div>
+
+<!-- Day theme banner -->
+<div class="day-theme" id="dayTheme"></div>
+
+<!-- Legend -->
+<div class="legend" id="legend"></div>
+
+<!-- Event list -->
+<div class="event-list" id="eventList"></div>
+
+<script>
+/* ════════════════════════════════════════════
+   DATA
+   ════════════════════════════════════════════ */
+
+const DAYS = [
+  { key: "2026-07-25", weekday: "SAT", date: "Jul 25", label: "Saturday, July 25, 2026", theme: "Welcome to WorldPride", quote: '"The beginning of every great journey starts with showing up."' },
+  { key: "2026-07-26", weekday: "SUN", date: "Jul 26", label: "Sunday, July 26, 2026",   theme: "Building Connections",  quote: '"Connection reminds us that we never have to walk alone again."' },
+  { key: "2026-07-27", weekday: "MON", date: "Jul 27", label: "Monday, July 27, 2026",   theme: "Recovery in Motion",    quote: '"Gratitude turns ordinary moments into extraordinary memories."' },
+  { key: "2026-07-28", weekday: "TUE", date: "Jul 28", label: "Tuesday, July 28, 2026",  theme: "Explore, Connect & Grow", quote: '"Recovery gives us the freedom to create memories we\'ll never have to forget."' },
+  { key: "2026-07-29", weekday: "WED", date: "Jul 29", label: "Wednesday, July 29, 2026", theme: "Celebrate Together",   quote: '"Recovery gives us the freedom to create memories we\'ll never have to forget."' },
+  { key: "2026-07-30", weekday: "THU", date: "Jul 30", label: "Thursday, July 30, 2026", theme: "Recovery in Action",    quote: '"Recovery isn\'t about avoiding life, it is about fully participating in it."' },
+  { key: "2026-07-31", weekday: "FRI", date: "Jul 31", label: "Friday, July 31, 2026",   theme: "Living Proud & Sober",  quote: '"Recovery gave us our lives back. Today we celebrate them together."' },
+  { key: "2026-08-01", weekday: "SAT", date: "Aug 1",  label: "Saturday, August 1, 2026", theme: "A Day to Remember",   quote: '"Some memories stay with us forever. Today is one of those days."' },
+  { key: "2026-08-02", weekday: "SUN", date: "Aug 2",  label: "Sunday, August 2, 2026",  theme: "Taking It Home",       quote: '"The journey may end, but recovery — and the friendships we\'ve built — continue long after we leave Amsterdam."' },
+];
+
+const CATEGORIES = [
+  { key: "all",          label: "All Categories",                color: null },
+  { key: "fellowship",   label: "Fellow-Ship Hosted Event",      color: "#7c3aed" },
+  { key: "workshop",     label: "Conference Workshop",           color: "#1d4ed8" },
+  { key: "official",     label: "Official WorldPride Event",     color: "#be185d" },
+  { key: "excursion",    label: "Excursion / Tour",              color: "#047857" },
+  { key: "optional",     label: "Optional Activity",             color: "#b45309" },
+  { key: "selfpay",      label: "Self-Pay Experience",           color: "#0f766e" },
+];
+
+// sort: minutes from midnight (used for ordering within a day)
+const SCHEDULE = [
+
+  /* ── SATURDAY JULY 25 ── */
+  {
+    day: "2026-07-25", sort: 630,
+    time: "10:30 AM", timeEnd: "",
+    category: "official",
+    title: "WorldPride Opening Meet-Up",
+    desc: "Meet in the Kimpton De Witt Hotel Lobby wearing your favorite Pride clothing and colors. We will gather as a community before heading into the heart of Amsterdam for the official opening-day celebration.",
+    location: "Kimpton De Witt Hotel Lobby | Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-07-25", sort: 660,
+    time: "11:00 AM", timeEnd: "3:00 PM",
+    category: "official",
+    title: "Pride Walk",
+    desc: "Walk with us through the heart of Amsterdam in a powerful celebration of freedom, visibility, equality, and love. The official Pride Walk begins at Dam Square and traditionally concludes at Pride Park in Vondelpark.",
+    location: "Route: Dam Square → Pride Park, Vondelpark"
+  },
+  {
+    day: "2026-07-25", sort: 720,
+    time: "12:00 PM", timeEnd: "",
+    category: "selfpay",
+    title: "Lunch at Pride Park",
+    desc: "Enjoy a lunch at your own expense while taking in the music, art, performances, and welcoming community atmosphere throughout Vondelpark.",
+    location: "Pride Park, Vondelpark"
+  },
+  {
+    day: "2026-07-25", sort: 721,
+    time: "12:00 PM", timeEnd: "10:00 PM",
+    category: "official",
+    title: "Pride Park",
+    desc: "Pride Park launches WorldPride with ten hours of music, art, entertainment, community programming, emerging talent, and celebrated LGBTQIA+ performers across Vondelpark. Guests may enjoy the festivities before or after Fellow-Ship programming.",
+    location: "Vondelpark, Amsterdam"
+  },
+  {
+    day: "2026-07-25", sort: 1080,
+    time: "6:00 PM", timeEnd: "7:00 PM",
+    category: "fellowship",
+    title: "Welcome Recovery Gathering — Keith",
+    desc: "Our first recovery gathering creates space to reconnect, welcome new friends, share intentions for the week, and begin this extraordinary experience grounded in fellowship and gratitude.",
+    location: "Meeting Location: TBD"
+  },
+  {
+    day: "2026-07-25", sort: 1155,
+    time: "7:15 PM", timeEnd: "",
+    category: "fellowship",
+    title: "Dinner and Fellowship",
+    desc: "Meet in the hotel lobby and join fellow travellers for dinner at a nearby restaurant chosen by group consensus. Expect laughter, meaningful conversation, and the beginning of friendships that may last far beyond Amsterdam.",
+    location: "Kimpton De Witt Hotel Lobby | Nieuwezijds Voorburgwal 5"
+  },
+  {
+    day: "2026-07-25", sort: 1260,
+    time: "Evening", timeEnd: "",
+    category: "optional",
+    title: "Explore Your Pride",
+    desc: "Continue enjoying WorldPride festivities or explore Amsterdam at your own pace. Guests are encouraged to review the official calendar for additional programming.",
+    location: "Amsterdam (various)"
+  },
+
+  /* ── SUNDAY JULY 26 ── */
+  {
+    day: "2026-07-26", sort: 600,
+    time: "10:00 AM", timeEnd: "11:00 AM",
+    category: "fellowship",
+    title: "Morning Recovery Gathering — Keith",
+    desc: "Begin the day with experience, strength, and hope. This welcoming meeting is an opportunity to become grounded, reconnect with the group, and prepare for another memorable day in Amsterdam.",
+    location: "Meeting Location: TBD"
+  },
+  {
+    day: "2026-07-26", sort: 630,
+    time: "10:30 AM", timeEnd: "1:30 PM",
+    category: "optional",
+    title: "A Fabulous Stroll in the Park — Women & Pride Edition",
+    desc: "Join old and new friends for a free 5.6-kilometer walk around Sloterplas, including a break at a queer-friendly location. Meet for coffee at 10:30 AM and begin walking at 11:00 AM. The organizers provide a drink and a snack.",
+    location: "Boothuis / Watersportcentrum Sloterplas | Christoffel Plantijngracht 4, Amsterdam"
+  },
+  {
+    day: "2026-07-26", sort: 660,
+    time: "11:00 AM", timeEnd: "1:30 PM",
+    category: "optional",
+    title: "Fetish Concert with Queer Notes",
+    desc: "Classical music meets fetish culture inside the concert hall of the H'ART Museum. Presented as part of COC Amsterdam's Shakespeare Club program. Ticketed WorldPride experience — approximately €10; verify final ticket details before attending.",
+    location: "H'ART Museum (ticketed, ~€10)"
+  },
+  {
+    day: "2026-07-26", sort: 720,
+    time: "12:00 PM", timeEnd: "",
+    category: "selfpay",
+    title: "Lunch & Fellowship",
+    desc: "Gather with fellow travelers for lunch or explore a neighborhood café together. This relaxed time allows friendships and conversations to grow naturally.",
+    location: "TBD"
+  },
+  {
+    day: "2026-07-26", sort: 930,
+    time: "3:30 PM", timeEnd: "8:00 PM",
+    category: "optional",
+    title: "Discover More WorldPride Programming",
+    desc: "Amsterdam offers concerts, community gatherings, arts programming, discussions, and celebrations throughout the city. Review the official calendar and choose the experience that speaks to you. Featured event: Stonfutu – The Support Pillars (celebrating Surinamese queer history, culture, and community).",
+    location: "Amsterdam Noord & various WorldPride venues"
+  },
+  {
+    day: "2026-07-26", sort: 1155,
+    time: "7:15 PM", timeEnd: "",
+    category: "fellowship",
+    title: "Group Dinner",
+    desc: "Meet in the hotel lobby and join the group for dinner at a location selected by group consensus. Share highlights from the day and prepare for the upcoming conference programming.",
+    location: "Kimpton De Witt Hotel Lobby | Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+
+  /* ── MONDAY JULY 27 ── */
+  {
+    day: "2026-07-27", sort: 600,
+    time: "10:00 AM", timeEnd: "11:00 AM",
+    category: "fellowship",
+    title: "Conference Registration — Leaders: Cassie & Keith",
+    desc: "Welcome to the official start of our conference programming. Check in, receive your materials, connect with the Fellow-Ship team, and get ready for the days ahead.",
+    location: "Harlowe Room | Kimpton De Witt Hotel, Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-07-27", sort: 675,
+    time: "11:15 AM", timeEnd: "12:15 PM",
+    category: "fellowship",
+    title: "Gratitude Recovery Meeting — Led by Cassie C.",
+    desc: "Pause, reflect, and begin the conference from a place of gratitude. Through shared experience and thoughtful discussion, we will explore how gratitude strengthens recovery and deepens our connection to the present moment.",
+    location: "Harlowe Room | Kimpton De Witt Hotel, Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-07-27", sort: 750,
+    time: "12:30 PM", timeEnd: "2:00 PM",
+    category: "selfpay",
+    title: "Coffee, Conversation & Fellowship",
+    desc: "Meet in the Finley Board Room and walk together to a nearby café for coffee, a snack, and unhurried fellowship. The final café selection will be made based on group size and availability. Options: De Koffieschenkerij (Oudekerksplein 27) or Kafenion Amsterdam (Bloemgracht 49).",
+    location: "Various nearby cafés (self-pay)"
+  },
+  {
+    day: "2026-07-27", sort: 960,
+    time: "4:00 PM", timeEnd: "5:00 PM",
+    category: "fellowship",
+    title: "Registration & Evening Recovery Gathering — Leaders: Cassie & Keith",
+    desc: "Guests who have not yet registered may complete check-in while the community gathers for an evening recovery meeting focused on staying connected and present throughout the week.",
+    location: "Harlowe Room | Kimpton De Witt Hotel, Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-07-27", sort: 1155,
+    time: "7:15 PM", timeEnd: "",
+    category: "fellowship",
+    title: "Dinner & Fellowship",
+    desc: "Meet before heading out together for dinner at a restaurant selected by group consensus.",
+    location: "Harlowe Room | Kimpton De Witt Hotel"
+  },
+  {
+    day: "2026-07-27", sort: 1200,
+    time: "Post-Dinner", timeEnd: "",
+    category: "optional",
+    title: "Banana Bar Outing",
+    desc: "Guests who would like to continue exploring Amsterdam may join an optional post-dinner outing to the Banana Bar. Participation is entirely optional and independently paid.",
+    location: "Oudezijds Achterburgwal 37, 1012 DA Amsterdam"
+  },
+  {
+    day: "2026-07-27", sort: 300,
+    time: "Anytime", timeEnd: "",
+    category: "optional",
+    title: "Explore Official WorldPride Events",
+    desc: "No specific official WorldPride event has been assigned to this day in the Fellow-Ship schedule. Review the official calendar for additional daytime and evening options.",
+    location: "Official WorldPride Event Calendar"
+  },
+
+  /* ── TUESDAY JULY 28 ── */
+  {
+    day: "2026-07-28", sort: 600,
+    time: "10:00 AM", timeEnd: "10:30 AM",
+    category: "fellowship",
+    title: "Daily Reflections — Registration",
+    desc: "Begin the morning with a brief, intentional reflection designed to quiet the mind, strengthen gratitude, and prepare us to experience Amsterdam with openness and purpose.",
+    location: "Harlowe Room | Kimpton De Witt Hotel, Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-07-28", sort: 660,
+    time: "11:00 AM", timeEnd: "",
+    category: "selfpay",
+    title: "Amsterdam Exploration & Lunch",
+    desc: "Gather for lunch (self-pay) and then walk together to the OBA Public Library. Head to the seventh floor for sweeping views of Amsterdam before continuing to roam the city as a group. The OBA Public Library is approximately a 15-minute walk from the host hotel.",
+    location: "OBA Public Library (15-min walk from hotel)"
+  },
+  {
+    day: "2026-07-28", sort: 990,
+    time: "4:30 PM", timeEnd: "5:30 PM",
+    category: "workshop",
+    title: "Pride, Recovery & Belonging — Showing Up Fully Without Losing Yourself",
+    desc: "Recovery invites us to live authentically while remaining grounded in our values. This open discussion explores identity, belonging, healthy boundaries, and practical ways to participate fully in Pride without sacrificing emotional balance or sobriety.",
+    location: "Harlowe Room | Kimpton De Witt Hotel, Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-07-28", sort: 1050,
+    time: "5:30 PM", timeEnd: "6:00 PM",
+    category: "fellowship",
+    title: "Conference Registration — Keith",
+    desc: "A final registration window for guests needing to collect materials or complete conference check-in.",
+    location: "Harlowe Room | Kimpton De Witt Hotel, Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-07-28", sort: 1095,
+    time: "6:15 PM", timeEnd: "7:15 PM",
+    category: "fellowship",
+    title: "Evening Recovery Gathering — Led by Keith",
+    desc: "Reconnect with the group through shared experience, strength, and hope as we close the day grounded in recovery and fellowship.",
+    location: "Harlowe Room | Kimpton De Witt Hotel, Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-07-28", sort: 1155,
+    time: "7:15 PM", timeEnd: "",
+    category: "fellowship",
+    title: "Dinner & Fellowship",
+    desc: "Meet in the Harlowe Room and enjoy dinner (self-pay) with the group at a restaurant selected by group consensus.",
+    location: "Harlowe Room | Kimpton De Witt Hotel"
+  },
+  {
+    day: "2026-07-28", sort: 1200,
+    time: "8:00 PM", timeEnd: "10:00 PM",
+    category: "optional",
+    title: "Explore WorldPride: Shibari Bondage Demonstrations",
+    desc: "Official Pride Hub educational event featuring demonstrations and discussions by fetish artists. Free admission with registration.",
+    location: "Amsterdam City Center (Free with registration)"
+  },
+
+  /* ── WEDNESDAY JULY 29 ── */
+  {
+    day: "2026-07-29", sort: 600,
+    time: "10:00 AM", timeEnd: "",
+    category: "excursion",
+    title: "Anne Frank House — Group 1 (Precise Entry 10:30 AM)",
+    desc: "Experience one of Amsterdam's most meaningful historical landmarks as we follow the remarkable story of Anne Frank. Depart Kimpton Lobby at 10:00 AM (Richard C. / Keith). This moving experience offers a powerful reminder of hope, courage, and resilience in the face of adversity.",
+    location: "Anne Frank House | Westermarkt 20, 1016 DK Amsterdam"
+  },
+  {
+    day: "2026-07-29", sort: 690,
+    time: "11:30 AM", timeEnd: "",
+    category: "excursion",
+    title: "Politically Incorrect Walking Tour — Group 1 (Leaves 11:50 AM)",
+    desc: "Discover Amsterdam through a unique historical and cultural perspective while exploring neighborhoods that helped shape the city's colorful past and vibrant LGBTQ+ community.",
+    location: "Meet-Up: Riverboat Dock | Contact: Cassie C. 571-249-8300"
+  },
+  {
+    day: "2026-07-29", sort: 750,
+    time: "12:30 PM", timeEnd: "",
+    category: "excursion",
+    title: "Anne Frank House — Group 2 (Precise Entry 12:45 PM)",
+    desc: "Guests assigned to the second departure will experience one of Amsterdam's most visited and inspiring museums.",
+    location: "Anne Frank House | Westermarkt 20, 1016 DK Amsterdam | Contact: Michael S. 310-770-3513"
+  },
+  {
+    day: "2026-07-29", sort: 1005,
+    time: "4:45 PM", timeEnd: "6:30 PM",
+    category: "excursion",
+    title: "Private Amsterdam Canal Cruise (Departs 5:00 PM)",
+    desc: "Experience Amsterdam from its most iconic perspective as we cruise through the city's historic canals together before returning to The Nobleman for an unforgettable evening.",
+    location: "Meet-Up: Riverboat Dock"
+  },
+  {
+    day: "2026-07-29", sort: 1140,
+    time: "7:00 PM", timeEnd: "",
+    category: "fellowship",
+    title: "Private Riverboat Dinner — The Nobleman",
+    desc: "Join your Fellow-Ship family aboard The Nobleman for an elegant evening of dining while welcoming our Amsterdam guests aboard for this special celebration. Pre-Registration Required. IMPORTANT: Passport required for boarding.",
+    location: "The Nobleman (Riverboat)"
+  },
+  {
+    day: "2026-07-29", sort: 1230,
+    time: "8:30 PM", timeEnd: "",
+    category: "fellowship",
+    title: "Recovery Meeting — Top Deck",
+    desc: "There is something truly special about gathering in recovery while overlooking the canals of Amsterdam. Join us on the Top Deck as we celebrate gratitude, friendship, and the gift of recovery together.",
+    location: "Top Deck – The Nobleman"
+  },
+  {
+    day: "2026-07-29", sort: 1290,
+    time: "9:30 PM", timeEnd: "",
+    category: "fellowship",
+    title: "Featured Evening Entertainment: Amy Armstrong & Mark Hartman",
+    desc: "The 3-time Live Entertainer of the Year in Puerto Vallarta, Amy combines powerhouse vocals, razor-sharp wit, and infectious humor to create a one-of-a-kind experience. Accompanied by her world-class pianist, Mark Hartman.",
+    location: "Majesty Lounge – The Nobleman"
+  },
+  {
+    day: "2026-07-29", sort: 1260,
+    time: "9:00 PM", timeEnd: "Midnight",
+    category: "optional",
+    title: "Open Air Film Festival",
+    desc: "After the riverboat festivities, guests are invited to continue their evening at Mercatorplein for WorldPride's free outdoor cinema experience celebrating queer storytelling from around the world.",
+    location: "Mercatorplein (Free admission)"
+  },
+
+  /* ── THURSDAY JULY 30 ── */
+  {
+    day: "2026-07-30", sort: 510,
+    time: "8:30 AM", timeEnd: "9:00 AM",
+    category: "fellowship",
+    title: "Morning Reflection",
+    desc: "Begin your day with intention, gratitude, and quiet reflection. This guided meditation is designed to help center your mind, reduce distractions, and prepare you for another meaningful day of recovery, fellowship, and exploration.",
+    location: "Emerson I & II | Kimpton De Witt Hotel, Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-07-30", sort: 630,
+    time: "10:30 AM", timeEnd: "11:30 AM",
+    category: "fellowship",
+    title: "Daily Recovery Gathering — Led by Chris F",
+    desc: "Recovery remains the foundation of everything we do. Join fellow travelers as we share experience, strength, and hope while beginning another day together with purpose, encouragement, and community. Registration will follow the meeting.",
+    location: "Emerson I & II | Kimpton De Witt Hotel, Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-07-30", sort: 700,
+    time: "11:40 AM", timeEnd: "",
+    category: "excursion",
+    title: "Politically Incorrect Walking Tour — Group 2 (Phil Y)",
+    desc: "Guests assigned to Group 2 will depart from the Kimpton De Witt Hotel Lobby for another engaging walking experience through Amsterdam's fascinating history, neighborhoods, and culture.",
+    location: "Kimpton De Witt Hotel Lobby | Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-07-30", sort: 720,
+    time: "12:00 PM", timeEnd: "1:00 PM",
+    category: "workshop",
+    title: "Grief, Change & Recovery — Moving Through Life's Transitions Without Picking Up",
+    desc: "Led by Emily S. Life continually presents change, loss, and uncertainty. This interactive workshop explores practical tools for navigating difficult life transitions while protecting the gift of recovery. Together we will discover how resilience, gratitude, and community help us move forward one day at a time.",
+    location: "Emerson I & II | Kimpton De Witt Hotel, Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-07-30", sort: 780,
+    time: "1:00 PM", timeEnd: "2:30 PM",
+    category: "selfpay",
+    title: "Lunch & Fellowship",
+    desc: "Take time to recharge while enjoying lunch with fellow guests. Whether you choose a neighborhood café or simply relax nearby, this is another opportunity to continue building friendships throughout the week.",
+    location: "TBD (self-pay)"
+  },
+  {
+    day: "2026-07-30", sort: 870,
+    time: "2:30 PM", timeEnd: "3:45 PM",
+    category: "workshop",
+    title: "Connection Without Chaos — Navigating Pride, Crowds & Social Pressure",
+    desc: "Led by Evan C. This workshop focuses on healthy boundaries, self-awareness, and practical tools for fully embracing Pride while remaining emotionally balanced and spiritually connected.",
+    location: "Emerson I & II | Kimpton De Witt Hotel, Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-07-30", sort: 960,
+    time: "4:00 PM", timeEnd: "5:00 PM",
+    category: "workshop",
+    title: "Featured Speaker Panel — Queer Recovery, Chosen Family & Service",
+    desc: "Led by Shockey, Phil Y, & Trae B. Hear from members of our recovery community as they discuss the importance of service, authentic connection, and building a chosen family that supports long-term recovery.",
+    location: "Emerson I & II | Kimpton De Witt Hotel, Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-07-30", sort: 1020,
+    time: "5:00 PM", timeEnd: "7:00 PM",
+    category: "fellowship",
+    title: "WorldPride Recovery Meeting / Meet & Greet Social",
+    desc: "Large celebrations bring excitement, energy, and opportunity. Together we will discuss practical ways to stay grounded, connected, and fully present while enjoying everything WorldPride has to offer. Light snacks and beverages will be served.",
+    location: "Kimpton De Witt Hotel Lobby | Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-07-30", sort: 1021,
+    time: "5:00 PM", timeEnd: "11:00 PM",
+    category: "optional",
+    title: "Senior Pride Concert",
+    desc: "Celebrate the pioneers who helped shape today's LGBTQIA+ community during this inspiring evening of music, performances, and celebration at Nieuwmarkt. Guests are welcome to attend independently before or after Fellow-Ship programming.",
+    location: "Nieuwmarkt, Amsterdam"
+  },
+  {
+    day: "2026-07-30", sort: 1320,
+    time: "Evening", timeEnd: "",
+    category: "optional",
+    title: "Explore Your Pride",
+    desc: "The evening is yours to continue discovering Amsterdam — Senior Pride Concert, Open Air Film Festivals (multiple outdoor squares), or Arts & Culture Pride Events continuing throughout the city.",
+    location: "Amsterdam (various) | See Official WorldPride Event Calendar"
+  },
+
+  /* ── FRIDAY JULY 31 ── */
+  {
+    day: "2026-07-31", sort: 540,
+    time: "9:00 AM", timeEnd: "10:00 AM",
+    category: "fellowship",
+    title: "Morning Recovery Gathering — Speaker: Jaime G",
+    desc: "Begin your day surrounded by the encouragement, support, and inspiration that has become the foundation of Fellow-Ship. Together we will prepare for one of the most exciting days of the week while remaining grounded in gratitude and recovery.",
+    location: "Emerson I & II | Kimpton De Witt Hotel, Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-07-31", sort: 660,
+    time: "11:00 AM", timeEnd: "12:00 PM",
+    category: "workshop",
+    title: "Service, Sponsorship & Community — Carrying the Message Wherever Life Takes You",
+    desc: "Led by Rich Colbert. Recovery becomes stronger when it is shared. Together we will explore the importance of sponsorship, service work, and building lasting recovery communities both at home and while traveling.",
+    location: "Emerson I & II | Kimpton De Witt Hotel, Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-07-31", sort: 750,
+    time: "12:30 PM", timeEnd: "1:30 PM",
+    category: "workshop",
+    title: "Living Proud & Sober — Identity, Joy & Resilience",
+    desc: "Led by Gary S. Celebrate the freedom to fully embrace who you are while protecting the recovery that made this journey possible. This interactive discussion explores authenticity, healthy relationships, resilience, and the joy of living life without compromise.",
+    location: "Emerson I & II | Kimpton De Witt Hotel, Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-07-31", sort: 810,
+    time: "1:30 PM", timeEnd: "4:00 PM",
+    category: "optional",
+    title: "Free Time & Personal Exploration",
+    desc: "Take this opportunity to rest, explore Amsterdam, shop, visit museums, or simply enjoy a relaxing afternoon before tonight's WorldPride celebration. Today's schedule has been intentionally designed to give everyone time to recharge before an exciting evening together.",
+    location: "Amsterdam (your choice)"
+  },
+  {
+    day: "2026-07-31", sort: 1020,
+    time: "5:00 PM", timeEnd: "",
+    category: "fellowship",
+    title: "Meet-Up for VIP WorldPride Experience",
+    desc: "Please gather in the Kimpton De Witt Hotel Lobby before departing together for our exclusive VIP Pride experience. Departure time will be announced during the morning meeting.",
+    location: "Emerson I & II | Kimpton De Witt Hotel, Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-07-31", sort: 960,
+    time: "4:00 PM", timeEnd: "Midnight",
+    category: "fellowship",
+    title: "VIP WorldPride Private Deck Celebration",
+    desc: "Experience WorldPride from one of the best viewing locations in Amsterdam as we celebrate together on our exclusive VIP Private Deck. Enjoy spectacular views of the festivities while surrounded by your Fellow-Ship family during what promises to be one of the highlights of the entire conference.",
+    location: "VIP Private Deck (location TBD)"
+  },
+  {
+    day: "2026-07-31", sort: 1080,
+    time: "6:00 PM", timeEnd: "7:00 PM",
+    category: "fellowship",
+    title: "Recovery Meeting — Led by Dale R.",
+    desc: "Guests who choose not to attend the VIP Private Deck are invited to join a recovery meeting led by members of the Fellow-Ship community. This gathering provides another opportunity to reconnect, reflect, and strengthen recovery together.",
+    location: "Emerson I & II | Kimpton De Witt Hotel, Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-07-31", sort: 1200,
+    time: "Post-Meeting", timeEnd: "",
+    category: "selfpay",
+    title: "Dinner & Fellowship",
+    desc: "Following the recovery meeting, guests are invited to enjoy dinner together at a nearby restaurant selected by group consensus before continuing with optional evening activities.",
+    location: "TBD (self-pay)"
+  },
+  {
+    day: "2026-07-31", sort: 1320,
+    time: "Evening", timeEnd: "",
+    category: "optional",
+    title: "Explore Your Pride — WorldPride Street Parties",
+    desc: "Amsterdam comes alive tonight as official WorldPride Street Parties fill the city with music, entertainment, dancing, and celebration. Guests wishing to continue exploring are encouraged to do so responsibly while remaining connected with their Fellow-Ship friends.",
+    location: "Amsterdam (various) | See Official WorldPride Event Calendar"
+  },
+
+  /* ── SATURDAY AUGUST 1 ── */
+  {
+    day: "2026-08-01", sort: 540,
+    time: "9:00 AM", timeEnd: "9:30 AM",
+    category: "fellowship",
+    title: "Daily Reflections — Led by Jeannine H.",
+    desc: "Begin Canal Parade Day by taking a few quiet moments to center yourself before experiencing one of the world's most celebrated Pride events.",
+    location: "Emerson I & II | Kimpton De Witt Hotel, Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-08-01", sort: 600,
+    time: "10:00 AM", timeEnd: "11:00 AM",
+    category: "fellowship",
+    title: "Morning Recovery Gathering",
+    desc: "Gather with the Fellowship community for encouragement, gratitude, and fellowship before heading into an exciting day filled with celebration and unforgettable experiences.",
+    location: "Emerson I & II | Kimpton De Witt Hotel, Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-08-01", sort: 720,
+    time: "12:00 PM", timeEnd: "6:00 PM",
+    category: "official",
+    title: "Amsterdam Canal Parade",
+    desc: "Experience one of the world's most iconic Pride celebrations as beautifully decorated boats travel through Amsterdam's historic canals in an unforgettable display of equality, creativity, diversity, and community.",
+    location: "Amsterdam Historic Canals"
+  },
+  {
+    day: "2026-08-01", sort: 810,
+    time: "1:30 PM", timeEnd: "",
+    category: "excursion",
+    title: "Official Canal Parade Viewing (Meet-Up)",
+    desc: "Guests holding pre-purchased Canal Parade tickets will meet before departing together for reserved grandstand seating. IMPORTANT: All backpacks will be searched upon entry. Outside food and beverages, including bottled water, are not permitted.",
+    location: "Kimpton De Witt Hotel Emerson I & II | Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-08-01", sort: 1140,
+    time: "7:00 PM", timeEnd: "",
+    category: "fellowship",
+    title: "Evening Recovery Gathering",
+    desc: "Following an incredible day of celebration, join us as we reconnect, reflect on the day's experiences, and celebrate another day of recovery together.",
+    location: "Emerson I & II | Kimpton De Witt Hotel, Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-08-01", sort: 1200,
+    time: "After Meeting", timeEnd: "",
+    category: "fellowship",
+    title: "Dinner & Fellowship",
+    desc: "Gather with friends for dinner and continue sharing stories from one of the most memorable days of our journey.",
+    location: "TBD"
+  },
+  {
+    day: "2026-08-01", sort: 1320,
+    time: "Evening", timeEnd: "",
+    category: "optional",
+    title: "Continue Exploring WorldPride",
+    desc: "Guests wishing to continue celebrating may explore Amsterdam's official WorldPride Street Parties, visit Reguliersdwarsstraat — one of the city's most famous LGBTQIA+ neighborhoods — or enjoy optional nightlife including Club NYX, Melkweg, Club Prime, or Club Panama's Bear Necessity event. Purchase tickets in advance when possible.",
+    location: "Amsterdam (various) | See Official WorldPride Event Calendar"
+  },
+
+  /* ── SUNDAY AUGUST 2 ── */
+  {
+    day: "2026-08-02", sort: 600,
+    time: "10:00 AM", timeEnd: "11:00 AM",
+    category: "fellowship",
+    title: "Morning Recovery Gathering — Led by Shockey & Justin J.",
+    desc: "Join us for one final recovery meeting as we celebrate an extraordinary week together and reflect on the moments that made this journey so meaningful.",
+    location: "Emerson I & II | Kimpton De Witt Hotel, Nieuwezijds Voorburgwal 5, 1012 RC Amsterdam"
+  },
+  {
+    day: "2026-08-02", sort: 690,
+    time: "11:30 AM", timeEnd: "",
+    category: "selfpay",
+    title: "Lunch and Fellowship",
+    desc: "Enjoy one final afternoon together while sharing stories, photographs, laughter, and memories from an unforgettable week in Amsterdam.",
+    location: "TBD (self-pay)"
+  },
+  {
+    day: "2026-08-02", sort: 1140,
+    time: "Time TBD", timeEnd: "",
+    category: "selfpay",
+    title: "Farewell Dinner",
+    desc: "Join us for our final evening together as we celebrate everything we have experienced throughout the week and the friendships that we will continue long after our journey home.",
+    location: "TBD (self-pay)"
+  },
+];
+
+
+/* ════════════════════════════════════════════
+   STATE
+   ════════════════════════════════════════════ */
+let selectedDay = DAYS[0].key;
+let selectedCat = "all";
+
+
+/* ════════════════════════════════════════════
+   HELPERS
+   ════════════════════════════════════════════ */
+const catMap = Object.fromEntries(CATEGORIES.map(c => [c.key, c]));
+
+function catLabel(key) {
+  return catMap[key] ? catMap[key].label : key;
+}
+
+const PIN_SVG = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`;
+
+
+/* ════════════════════════════════════════════
+   RENDER
+   ════════════════════════════════════════════ */
+function buildDayScroller() {
+  const scroller = document.getElementById("dayScroller");
+  scroller.innerHTML = "";
+  DAYS.forEach(d => {
+    const btn = document.createElement("button");
+    btn.className = "day-btn" + (d.key === selectedDay ? " active" : "");
+    btn.innerHTML = `<span class="btn-weekday">${d.weekday}</span><span class="btn-date">${d.date}</span>`;
+    btn.addEventListener("click", () => {
+      selectedDay = d.key;
+      renderAll();
+      // Scroll the clicked button into view
+      btn.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    });
+    scroller.appendChild(btn);
+  });
+}
+
+function buildCatSelect() {
+  const sel = document.getElementById("catSelect");
+  sel.innerHTML = "";
+  CATEGORIES.forEach(c => {
+    const opt = document.createElement("option");
+    opt.value = c.key;
+    opt.textContent = c.label;
+    sel.appendChild(opt);
+  });
+  sel.value = selectedCat;
+  sel.addEventListener("change", e => {
+    selectedCat = e.target.value;
+    renderEvents();
+  });
+}
+
+function buildLegend() {
+  const legend = document.getElementById("legend");
+  legend.innerHTML = CATEGORIES.filter(c => c.key !== "all").map(c =>
+    `<div class="legend-item">
+      <div class="legend-dot" style="background:${c.color}"></div>
+      <span>${c.label}</span>
+    </div>`
+  ).join("");
+}
+
+function renderDayTheme() {
+  const day = DAYS.find(d => d.key === selectedDay);
+  if (!day) return;
+  const el = document.getElementById("dayTheme");
+  el.innerHTML = `
+    <div class="day-theme-label">Theme</div>
+    <div class="day-theme-name">${day.theme}</div>
+    <div class="day-theme-date">${day.label}</div>
+  `;
+}
+
+function renderEvents() {
+  const list = document.getElementById("eventList");
+
+  // Update active day button
+  document.querySelectorAll(".day-btn").forEach((btn, i) => {
+    btn.classList.toggle("active", DAYS[i].key === selectedDay);
+  });
+
+  // Update select
+  const sel = document.getElementById("catSelect");
+  sel.value = selectedCat;
+
+  // Filter + sort
+  const events = SCHEDULE
+    .filter(e => e.day === selectedDay && (selectedCat === "all" || e.category === selectedCat))
+    .sort((a, b) => a.sort - b.sort);
+
+  if (events.length === 0) {
+    list.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">📅</div>
+        <div class="empty-state-text">No events found</div>
+        <div class="empty-state-sub">Try selecting a different category or day</div>
+      </div>`;
+    return;
+  }
+
+  list.innerHTML = events.map(e => {
+    const timeEndStr = e.timeEnd ? `<div class="event-time-end">${e.timeEnd}</div>` : "";
+    const locStr = e.location
+      ? `<div class="event-location">${PIN_SVG} <span>${e.location}</span></div>`
+      : "";
+    return `
+      <div class="event-card cat-${e.category}">
+        <div class="event-accent"></div>
+        <div class="event-time">
+          <div class="event-time-inner">
+            <div class="event-time-start">${e.time}</div>
+            ${timeEndStr}
+          </div>
+        </div>
+        <div class="event-divider"></div>
+        <div class="event-body">
+          <div class="event-badge">${catLabel(e.category)}</div>
+          <div class="event-title">${e.title}</div>
+          <div class="event-desc">${e.desc}</div>
+          ${locStr}
+        </div>
+      </div>`;
+  }).join("");
+}
+
+function renderAll() {
+  buildDayScroller();
+  renderDayTheme();
+  renderEvents();
+}
+
+/* ════════════════════════════════════════════
+   INIT
+   ════════════════════════════════════════════ */
+buildCatSelect();
+buildLegend();
+renderAll();
+
+// Scroll the active day button into view on load
+requestAnimationFrame(() => {
+  const active = document.querySelector(".day-btn.active");
+  if (active) active.scrollIntoView({ block: "nearest", inline: "center" });
+});
+</script>
+</body>
+</html>
