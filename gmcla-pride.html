@@ -280,7 +280,8 @@
     .event-location a:hover { opacity: .75; }
     .loc-extra { font-size: .9em; opacity: .8; }
 
-    /* ── Day slide animations ── */
+    /* Day slide animations — wrapper clips the horizontal overflow */
+    .schedule-viewport { overflow: hidden; }
     @keyframes _dayOut  { to   { opacity:0; } }
     @keyframes _dayInR  { from { opacity:0; transform:translateX(44px);  } to { opacity:1; transform:none; } }
     @keyframes _dayInL  { from { opacity:0; transform:translateX(-44px); } to { opacity:1; transform:none; } }
@@ -353,6 +354,9 @@
   </div>
 </div>
 
+<!-- Clip wrapper — prevents translateX animation from expanding page width -->
+<div class="schedule-viewport">
+
 <!-- Day theme banner -->
 <div class="day-theme" id="dayTheme"></div>
 
@@ -361,6 +365,8 @@
 
 <!-- Event list -->
 <div class="event-list" id="eventList"></div>
+
+</div><!-- /.schedule-viewport -->
 
 <script>
 /* ════════════════════════════════════════════
