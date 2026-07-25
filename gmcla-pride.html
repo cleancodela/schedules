@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>GMCLA WorldPride & London Tour 2026</title>
+
+  <!-- ── Homescreen / PWA meta ── -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="GMCLA Tour" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#0f172a" />
+  <link id="apple-touch-icon" rel="apple-touch-icon" />
+  <link id="favicon" rel="icon" type="image/png" />
+
+  <style>
+    :root {
+      --required:        #b45309;
+      --required-bg:     #fef3c7;
+      --required-border: #b45309;
+
+      --optional:        #374151;
+      --optional-bg:     #f3f4f6;
+      --optional-border: #9ca3af;
+
+      --amsterdam:  #1d4ed8;
+      --london:     #7c3aed;
+      --travel:     #0f766e;
+
+      --surface:    #ffffff;
+      --bg:         #f4f4f5;
+      --text:       #111827;
+      --text-muted: #6b7280;
+      --border:     #e5e7eb;
+      --radius:     12px;
+      --radius-sm:  6px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #1e3a5f 100%);
+      padding: 20px 16px 22px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg,
+        rgba(99,102,241,.2) 0%, rgba(59,130,246,.2) 33%,
+        rgba(168,85,247,.2) 66%, rgba(236,72,153,.2) 100%);
+      pointer-events: none;
+    }
+    .logo-box {
+      position: relative;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+    .logo-icon { font-size: 38px; line-height: 1; }
+    .logo-title {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      color: #fff;
+      text-shadow: 0 1px 6px rgba(0,0,0,.5);
+    }
+    .logo-subtitle {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,.7);
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+    }
+    .logo-dates {
+      font-size: 11px;
+      color: rgba(255,255,255,.55);
+      margin-top: 2px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── Attire info banner ── */
+    .attire-bar {
+      background: #fef9c3;
+      border-bottom: 1px solid #fde68a;
+    }
+    .attire-toggle {
+      width: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 9px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      color: #92400e;
+      text-align: left;
+    }
+    .attire-toggle svg { flex-shrink: 0; transition: transform .2s; }
+    .attire-toggle.open svg { transform: rotate(180deg); }
+    .attire-body {
+      display: none;
+      padding: 0 16px 12px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #78350f;
+    }
+    .attire-body.open { display: block; }
+    .attire-body strong { display: block; margin-top: 6px; margin-bottom: 2px; }
+
+    /* ── Sticky controls ── */
+    .controls {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+
+    .day-scroller-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding: 11px 16px 9px;
+      border-bottom: 1px solid var(--border);
+    }
+    .day-scroller-wrap::-webkit-scrollbar { display: none; }
+    .day-scroller { display: flex; gap: 6px; width: max-content; }
+
+    .day-btn {
+      flex-shrink: 0;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 99px;
+      padding: 6px 13px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      line-height: 1;
+      transition: all .15s ease;
+      white-space: nowrap;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1px;
+    }
+    .day-btn .btn-weekday {
+      font-size: 9px; font-weight: 700;
+      letter-spacing: 0.8px; text-transform: uppercase;
+    }
+    .day-btn .btn-date { font-size: 13px; font-weight: 800; }
+    .day-btn .btn-city {
+      font-size: 8px; font-weight: 700; letter-spacing: 0.6px;
+      text-transform: uppercase; opacity: .7;
+    }
+
+    .day-btn:hover { border-color: #6366f1; color: #4f46e5; background: #eef2ff; }
+
+    .day-btn.active.city-amsterdam {
+      background: linear-gradient(135deg, #1d4ed8, #6366f1);
+      border-color: transparent; color: #fff;
+      box-shadow: 0 2px 8px rgba(29,78,216,.4);
+    }
+    .day-btn.active.city-london {
+      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      border-color: transparent; color: #fff;
+      box-shadow: 0 2px 8px rgba(124,58,237,.4);
+    }
+    .day-btn.active.city-travel {
+      background: linear-gradient(135deg, #0f766e, #0d9488);
+      border-color: transparent; color: #fff;
+      box-shadow: 0 2px 8px rgba(15,118,110,.4);
+    }
+
+    /* Category filter */
+    .filter-row {
+      padding: 9px 16px 11px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .filter-label {
+      font-size: 12px; font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.8px;
+      white-space: nowrap;
+    }
+    .cat-select {
+      flex: 1;
+      appearance: none; -webkit-appearance: none;
+      background: var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 8px 32px 8px 12px;
+      font-size: 14px; font-weight: 500; color: var(--text);
+      cursor: pointer; transition: border-color .15s;
+    }
+    .cat-select:focus {
+      outline: none; border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99,102,241,.12);
+    }
+
+    /* ── Day theme banner ── */
+    .day-theme {
+      padding: 10px 16px 2px;
+      max-width: 680px; margin: 0 auto;
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .day-theme-left { flex: 1; }
+    .day-theme-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.2px;
+      text-transform: uppercase; color: var(--text-muted);
+    }
+    .day-theme-name {
+      font-size: 16px; font-weight: 800; color: var(--text); margin-top: 2px;
+    }
+    .day-theme-date { font-size: 13px; color: var(--text-muted); margin-top: 1px; }
+    .city-badge {
+      flex-shrink: 0;
+      padding: 4px 10px;
+      border-radius: 99px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+      color: #fff; margin-top: 4px;
+    }
+    .city-badge.amsterdam { background: var(--amsterdam); }
+    .city-badge.london    { background: var(--london); }
+    .city-badge.travel    { background: var(--travel); }
+
+    /* ── Legend ── */
+    .legend {
+      max-width: 680px; margin: 0 auto;
+      padding: 4px 12px 4px;
+      display: flex; flex-wrap: wrap; gap: 10px;
+    }
+    .legend-item {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 12px; font-weight: 600; color: var(--text-muted);
+    }
+    .legend-dot { width: 9px; height: 9px; border-radius: 50%; }
+
+    /* ── Event list ── */
+    .event-list {
+      max-width: 680px; margin: 0 auto;
+      padding: 10px 12px 48px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+
+    .event-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+      overflow: hidden;
+      display: flex;
+      border: 1px solid var(--border);
+      transition: box-shadow .15s, transform .15s;
+    }
+    .event-card:active { transform: scale(0.99); }
+
+    .event-accent { width: 4px; flex-shrink: 0; }
+    .event-card.cat-required  .event-accent { background: var(--required); }
+    .event-card.cat-optional  .event-accent { background: var(--optional-border); }
+
+    .event-time {
+      flex-shrink: 0; width: 72px;
+      display: flex; align-items: flex-start; justify-content: center;
+      padding: 13px 6px 13px 10px;
+    }
+    .event-time-inner { text-align: center; }
+    .event-time-start { font-size: 12px; font-weight: 700; color: var(--text); white-space: nowrap; }
+    .event-time-end   { font-size: 10px; color: var(--text-muted); margin-top: 2px; white-space: nowrap; }
+
+    .event-divider { width: 1px; background: var(--border); margin: 10px 0; }
+
+    .event-body { flex: 1; padding: 12px 14px 12px 12px; min-width: 0; }
+
+    .event-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.6px;
+      text-transform: uppercase; padding: 2px 8px;
+      border-radius: 99px; margin-bottom: 6px;
+    }
+    .event-card.cat-required .event-badge {
+      background: var(--required-bg); color: var(--required);
+    }
+    .event-card.cat-optional .event-badge {
+      background: var(--optional-bg); color: var(--optional);
+    }
+
+    .star-icon { font-style: normal; font-size: 11px; }
+
+    .event-title { font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 4px; }
+    .event-desc  { font-size: 13px; color: #4b5563; line-height: 1.5; margin-bottom: 6px; }
+    .event-location {
+      font-size: 11px; color: var(--text-muted);
+      display: flex; align-items: flex-start; gap: 4px; line-height: 1.4;
+    }
+    .event-location svg { flex-shrink: 0; margin-top: 1px; }
+
+    /* Required card — slightly elevated */
+    .event-card.cat-required {
+      border-color: #fde68a;
+      box-shadow: 0 1px 4px rgba(180,83,9,.1);
+    }
+
+    /* Transit hints */
+    .event-transit {
+      font-size: 11px; color: var(--text-muted);
+      margin-top: 4px; line-height: 1.5;
+    }
+    .event-transit span { margin-right: 8px; }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center; padding: 48px 24px; color: var(--text-muted);
+    }
+    .empty-state-icon { font-size: 48px; margin-bottom: 12px; }
+    .empty-state-text { font-size: 16px; font-weight: 600; }
+    .empty-state-sub  { font-size: 14px; margin-top: 4px; opacity: .7; }
+
+    @media (min-width: 600px) {
+      .header { padding: 26px 24px 28px; }
+      .logo-title { font-size: 20px; }
+      .day-scroller-wrap { padding: 12px 24px 10px; }
+      .filter-row { padding: 9px 24px 12px; }
+      .event-list { padding: 12px 16px 56px; gap: 10px; }
+      .day-theme { padding: 12px 16px 4px; }
+      .event-time { width: 80px; }
+      .event-time-start { font-size: 13px; }
+      .event-desc  { font-size: 14px; }
+      .event-title { font-size: 15px; }
+      .legend { padding: 4px 16px 6px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="logo-box">
+    <div class="logo-icon">🎵</div>
+    <div class="logo-title">GMCLA WorldPride & London Tour</div>
+    <div class="logo-subtitle">Full Itinerary</div>
+    <div class="logo-dates">July 31 – August 9, 2026</div>
+  </div>
+</header>
+
+<!-- Attire info -->
+<div class="attire-bar">
+  <button class="attire-toggle" id="attireToggle" onclick="toggleAttire()">
+    <span>👔 Attire Guide — tap to expand</span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+  <div class="attire-body" id="attireBody">
+    <strong>Concertgebouw, Televised TV Performance &amp; London Concerts:</strong>
+    Solid white shirt (no logos or decorations, sleeves at least to the elbows). Solid white pants (no logos, no shorts). White shoes or sneakers. Solid white socks — no socks also OK.
+    <strong>Casual Performances &amp; Out as a Chorus:</strong>
+    GMCLA Tee shirt of choice — pack a few!
+  </div>
+</div>
+
+<!-- Sticky Controls -->
+<div class="controls">
+  <div class="day-scroller-wrap">
+    <div class="day-scroller" id="dayScroller"></div>
+  </div>
+  <div class="filter-row">
+    <span class="filter-label">Show</span>
+    <select class="cat-select" id="catSelect"></select>
+  </div>
+</div>
+
+<!-- Day theme banner -->
+<div class="day-theme" id="dayTheme"></div>
+
+<!-- Legend -->
+<div class="legend" id="legend"></div>
+
+<!-- Event list -->
+<div class="event-list" id="eventList"></div>
+
+<script>
+/* ════════════════════════════════════════════
+   DATA
+   ════════════════════════════════════════════ */
+
+const DAYS = [
+  { key:"2026-07-31", weekday:"FRI", date:"Jul 31", city:"amsterdam", cityLabel:"Amsterdam", label:"Friday, July 31, 2026",   theme:"Arrival Day & Welcome Events" },
+  { key:"2026-08-01", weekday:"SAT", date:"Aug 1",  city:"amsterdam", cityLabel:"Amsterdam", label:"Saturday, August 1, 2026", theme:"Canal Pride Parade" },
+  { key:"2026-08-02", weekday:"SUN", date:"Aug 2",  city:"amsterdam", cityLabel:"Amsterdam", label:"Sunday, August 2, 2026",   theme:"Tours & Public Singing" },
+  { key:"2026-08-03", weekday:"MON", date:"Aug 3",  city:"amsterdam", cityLabel:"Amsterdam", label:"Monday, August 3, 2026",   theme:"Concertgebouw Day" },
+  { key:"2026-08-04", weekday:"TUE", date:"Aug 4",  city:"amsterdam", cityLabel:"Amsterdam", label:"Tuesday, August 4, 2026",  theme:"Televised WorldPride Performance" },
+  { key:"2026-08-05", weekday:"WED", date:"Aug 5",  city:"travel",    cityLabel:"Travel",    label:"Wednesday, August 5, 2026", theme:"Travel Day — Amsterdam → London" },
+  { key:"2026-08-06", weekday:"THU", date:"Aug 6",  city:"london",    cityLabel:"London",    label:"Thursday, August 6, 2026", theme:"Rehearsal in London" },
+  { key:"2026-08-07", weekday:"FRI", date:"Aug 7",  city:"london",    cityLabel:"London",    label:"Friday, August 7, 2026",   theme:"Concert #1 — St. Paul's Church" },
+  { key:"2026-08-08", weekday:"SAT", date:"Aug 8",  city:"london",    cityLabel:"London",    label:"Saturday, August 8, 2026", theme:"Concert Day & Closing Party" },
+  { key:"2026-08-09", weekday:"SUN", date:"Aug 9",  city:"london",    cityLabel:"London",    label:"Sunday, August 9, 2026",   theme:"Departure Day" },
+];
+
+const CATEGORIES = [
+  { key:"all",      label:"All Events" },
+  { key:"required", label:"★  Required" },
+  { key:"optional", label:"Not Required" },
+];
+
+// sort = minutes from midnight
+const SCHEDULE = [
+
+  /* ── FRIDAY JULY 31 – Arrival Day ── */
+  {
+    day:"2026-07-31", sort:480, category:"optional",
+    time:"Morning", timeEnd:"",
+    title:"Individual Arrivals",
+    desc:"Travel according to your individual plans and get settled in Amsterdam.",
+    location:"", transit:""
+  },
+  {
+    day:"2026-07-31", sort:960, category:"required",
+    time:"4:00 PM", timeEnd:"6:00 PM",
+    title:"Welcome & Reception with Queer Voices Unite",
+    desc:"Our first gathering of the tour — meet the international choruses and kick off the WorldPride week together.",
+    location:"Museum H'ART Amsterdam | Amstel 51, 1018 EJ Amsterdam",
+    transit:"Tram 14 & Metro 51/53/54 → Waterlooplein · Tram 1/7/19 → Weesperplein"
+  },
+  {
+    day:"2026-07-31", sort:1200, category:"optional",
+    time:"Evening", timeEnd:"",
+    title:"Free Evening — Explore Amsterdam",
+    desc:"Explore Amsterdam with the choruses. WorldPride street parties and events are happening across the city all night.",
+    location:"Amsterdam (various)", transit:""
+  },
+
+  /* ── SATURDAY AUGUST 1 – Canal Pride Parade ── */
+  {
+    day:"2026-08-01", sort:540, category:"optional",
+    time:"9:00 AM", timeEnd:"",
+    title:"Meet at Canal for Parade Viewing",
+    desc:"Gather at Wertheimpark to get a great spot before the parade begins at noon.",
+    location:"Wertheimpark | Anne Frankstraat 172, 1011 SX Amsterdam",
+    transit:"Tram 14 → Artis/Holocaustmuseum · Metro 51/53/54 → Waterlooplein (exit Nieuwe Herengracht)"
+  },
+  {
+    day:"2026-08-01", sort:720, category:"required",
+    time:"12:00 PM", timeEnd:"7:00 PM",
+    title:"Canal Pride Parade Viewing & Performances",
+    desc:"Choruses gather to watch the parade together in the park. Come and go as you please to socialize with chorus members from around the world. Bring your own food or purchase at food stands along the route.",
+    location:"Canal Parade route — Amsterdam",
+    transit:""
+  },
+  {
+    day:"2026-08-01", sort:1200, category:"optional",
+    time:"Evening", timeEnd:"",
+    title:"Social Night Out",
+    desc:"Continue celebrating with citywide WorldPride events and street parties.",
+    location:"Amsterdam (various)", transit:""
+  },
+
+  /* ── SUNDAY AUGUST 2 – Tours & Public Singing ── */
+  {
+    day:"2026-08-02", sort:540, category:"optional",
+    time:"9:00 AM", timeEnd:"1:30 PM",
+    title:"Scratch Rehearsal — Queer Voices Unite Church Service (Alternate)",
+    desc:"Up to 10 GMCLA singers may join the Scratch rehearsal to perform in the Pride Church Service 'Unite'. This is in place of the Boat Tour — RSVP to Catie before July 1st if you prefer this option.",
+    location:"Keizersgracht Church | Keizersgracht 566, 1017 EM Amsterdam",
+    transit:"Tram 2/17/24 → Keizersgracht · Tram 1/7/19 → Rijksmuseum"
+  },
+  {
+    day:"2026-08-02", sort:720, category:"required",
+    time:"12:00 PM", timeEnd:"1:30 PM",
+    title:"GMCLA Private Boat Tour of Amsterdam",
+    desc:"A private group boat tour through Amsterdam's iconic canals. All members not participating in the church service attend this.",
+    location:"Blue Boat Company | Stadhouderskade 501, 1071 ZD Amsterdam",
+    transit:"Tram 1/2/5/7/17/19/24 → Leidseplein · Tram 12 → Concertgebouw"
+  },
+  {
+    day:"2026-08-02", sort:810, category:"optional",
+    time:"1:30 PM", timeEnd:"3:00 PM",
+    title:"Picnic in the Park",
+    desc:"Food is provided — please bring your own drink (can pick some up at a local market nearby).",
+    location:"Vondelpark, Amsterdam (walking distance from Blue Boat Company & Keizersgrachtkerk)",
+    transit:"Tram 1/2/5/7/17/19/24 → Leidseplein · Tram 12 → Van Baerlestraat"
+  },
+  {
+    day:"2026-08-02", sort:900, category:"required",
+    time:"3:00 PM", timeEnd:"5:00 PM",
+    title:"Public A Cappella Singing with Choruses",
+    desc:"Each chorus performs 10–15 minutes at 3 locations. A sound amplifier is available at Vondelpark.",
+    location:"Vondelpark & nearby: Leidseplein, Max Euweplein, and/or Rijksmuseum",
+    transit:""
+  },
+  {
+    day:"2026-08-02", sort:1140, category:"optional",
+    time:"7:00 PM", timeEnd:"",
+    title:"GMCLA Group Dinner at BLIK Amsterdam",
+    desc:"Group dinner with a pre-fix menu including multiple options, wine and beer.",
+    location:"BLIK Amsterdam | 9V8R+G4 Amsterdam, Netherlands",
+    transit:""
+  },
+
+  /* ── MONDAY AUGUST 3 – Concertgebouw Day ── */
+  {
+    day:"2026-08-03", sort:750, category:"required",
+    time:"12:30 PM", timeEnd:"",
+    title:"Sound Check & Rehearsal — Concertgebouw",
+    desc:"Rehearsal in the main hall ahead of tonight's concert. Use the artist entrance on Jan Willem Brouwersstraat 1.",
+    location:"Concertgebouw | Concertgebouwplein 10, 1071 LH Amsterdam",
+    transit:"Tram 5/12/24 → Concertgebouw · Tram 1/2/7/19 → Rijksmuseum · Tram 25 → Roelof Hartplein"
+  },
+  {
+    day:"2026-08-03", sort:990, category:"optional",
+    time:"4:30 PM", timeEnd:"",
+    title:"Dinner Break",
+    desc:"On your own — supermarkets and cafés are available in the neighborhood near Concertgebouw.",
+    location:"Concertgebouw area, Amsterdam", transit:""
+  },
+  {
+    day:"2026-08-03", sort:1080, category:"required",
+    time:"6:00 PM", timeEnd:"",
+    title:"Call Time / Check-In for Concert",
+    desc:"All chorus members report in at the Concertgebouw ahead of the concert.",
+    location:"Concertgebouw | Concertgebouwplein 10, 1071 LH Amsterdam",
+    transit:""
+  },
+  {
+    day:"2026-08-03", sort:1140, category:"required",
+    time:"7:00 PM", timeEnd:"11:00 PM",
+    title:"Concert — "Queer Voices Unite" at Concertgebouw",
+    desc:"7:30–8:50 PM: Dutch Choirs (15-min sets). 8:50–10:30 PM: International Choirs — GMCLA's set is approximately 30 minutes. Tickets available at concertgebouw.nl.",
+    location:"Concertgebouw | Concertgebouwplein 10, 1071 LH Amsterdam",
+    transit:""
+  },
+  {
+    day:"2026-08-03", sort:1380, category:"optional",
+    time:"Post-Concert", timeEnd:"",
+    title:"Optional Afterparty — Paradiso",
+    desc:"Continue the evening at one of Amsterdam's most iconic music venues, a 10-minute stroll from Concertgebouw. Note: public transport at Leidseplein terminates around 00:30.",
+    location:"Paradiso | Weteringschans 6-8, 1017 SG Amsterdam",
+    transit:""
+  },
+
+  /* ── TUESDAY AUGUST 4 – Televised Performance ── */
+  {
+    day:"2026-08-04", sort:600, category:"required",
+    time:"TBD", timeEnd:"",
+    title:"Sound Check — Televised WorldPride Performance",
+    desc:"Keep your day open and flexible until the sound check time is confirmed. Details will be shared as the date approaches.",
+    location:"Museumplein, Amsterdam",
+    transit:"Tram 1/2/5/7/19/24 → Rijksmuseum · Tram 12 → Concertgebouw · Tram 25 → Roelof Hartplein"
+  },
+  {
+    day:"2026-08-04", sort:1020, category:"required",
+    time:"5:00 PM", timeEnd:"10:00 PM",
+    title:"Televised WorldPride Conference Performance",
+    desc:"GMCLA performs 1 song at the start of the evening. Members will have a seat to watch the rest of the concert. Guest tickets are not provided — guests must purchase their own.",
+    location:"Museumplein, Amsterdam",
+    transit:"Tram 1/2/5/7/19/24 → Rijksmuseum · Tram 12 → Concertgebouw · Tram 25 → Roelof Hartplein"
+  },
+
+  /* ── WEDNESDAY AUGUST 5 – Travel Day ── */
+  {
+    day:"2026-08-05", sort:480, category:"optional",
+    time:"Morning", timeEnd:"",
+    title:"Travel to London via Train",
+    desc:"Individual travel plans — coordinate your Eurostar or train booking to arrive in London in the afternoon.",
+    location:"Amsterdam Centraal → London St. Pancras", transit:""
+  },
+  {
+    day:"2026-08-05", sort:840, category:"optional",
+    time:"Afternoon & Evening", timeEnd:"",
+    title:"Free Time in London",
+    desc:"Get settled, explore your neighbourhood, and rest up before rehearsal tomorrow.",
+    location:"London (various)", transit:""
+  },
+
+  /* ── THURSDAY AUGUST 6 – Rehearsal in London ── */
+  {
+    day:"2026-08-06", sort:480, category:"optional",
+    time:"Morning", timeEnd:"",
+    title:"Free Time",
+    desc:"Explore London on your own before the afternoon rehearsal.",
+    location:"London", transit:""
+  },
+  {
+    day:"2026-08-06", sort:590, category:"optional",
+    time:"9:50 AM", timeEnd:"",
+    title:"Optional: Foggy London Tour with Martin Kaufman",
+    desc:"A guided London tour led by Martin Kaufman from London GMC. RSVP to Catie — space is limited.",
+    location:"London (RSVP to Catie for details)", transit:""
+  },
+  {
+    day:"2026-08-06", sort:900, category:"required",
+    time:"3:00 PM", timeEnd:"6:00 PM",
+    title:"Rehearsal — St. Paul's Church (The Actors' Church)",
+    desc:"Full rehearsal ahead of the London concert series.",
+    location:"St. Paul's Church | Bedford St, London WC2E 9ED, United Kingdom",
+    transit:""
+  },
+  {
+    day:"2026-08-06", sort:1170, category:"optional",
+    time:"7:30 PM", timeEnd:"",
+    title:"Social with London GMC — Duke of Wellington",
+    desc:"Casual social with the London Gay Men's Chorus. Not hosted by either chorus — drinks are not provided. This venue does not serve food, so please have dinner before arriving.",
+    location:"Duke of Wellington | 77 Wardour St, London W1D 6QA",
+    transit:""
+  },
+
+  /* ── FRIDAY AUGUST 7 – Concert #1 ── */
+  {
+    day:"2026-08-07", sort:930, category:"required",
+    time:"3:30 PM", timeEnd:"5:00 PM",
+    title:"Rehearsal — St. Paul's Church",
+    desc:"Final rehearsal before Concert #1 tonight.",
+    location:"St. Paul's Church | Bedford St, London WC2E 9ED",
+    transit:""
+  },
+  {
+    day:"2026-08-07", sort:1020, category:"optional",
+    time:"5:00 PM", timeEnd:"",
+    title:"GMCLA Group Dinner (Pre-Concert)",
+    desc:"Pre-fix dinner with soft drinks, split into two groups. Group A: Cabana, Covent Garden (5:30–6:30 PM) | Group B: Nags Head, Covent Garden (5:00–6:00 PM). Check your group assignment.",
+    location:"Group A: Cabana | 7 St Giles High St, London WC2H 8AB\nGroup B: Nags Head | 10 James Street, London WC2E 8BT",
+    transit:""
+  },
+  {
+    day:"2026-08-07", sort:1170, category:"required",
+    time:"7:30 PM", timeEnd:"",
+    title:"London Concert #1 — St. Paul's Church",
+    desc:"First of three London concerts. Concert attire required.",
+    location:"St. Paul's Church | Bedford St, London WC2E 9ED",
+    transit:""
+  },
+
+  /* ── SATURDAY AUGUST 8 – Concert Day & Closing ── */
+  {
+    day:"2026-08-08", sort:870, category:"required",
+    time:"2:30 PM", timeEnd:"",
+    title:"London Concert #2 — St. Paul's Church",
+    desc:"Matinée performance. Concert attire required.",
+    location:"St. Paul's Church | Bedford St, London WC2E 9ED",
+    transit:""
+  },
+  {
+    day:"2026-08-08", sort:1020, category:"optional",
+    time:"5:00 PM", timeEnd:"",
+    title:"GMCLA Group Dinner (Pre-Concert #3)",
+    desc:"Pre-fix dinner with soft drinks. Group B: Cabana, Covent Garden (5:30–6:30 PM) | Group A: Crust Bros, Covent Garden (5:15–6:30 PM). Check your group assignment.",
+    location:"Group B: Cabana | 7 St Giles High St, London WC2H 8AB\nGroup A: Crust Bros | 29 Bedford St, London WC2E 8JF",
+    transit:""
+  },
+  {
+    day:"2026-08-08", sort:1170, category:"required",
+    time:"7:30 PM", timeEnd:"",
+    title:"London Concert #3 — St. Paul's Church",
+    desc:"Third and final London concert. Concert attire required.",
+    location:"St. Paul's Church | Bedford St, London WC2E 9ED",
+    transit:""
+  },
+  {
+    day:"2026-08-08", sort:1320, category:"required",
+    time:"10:00 PM", timeEnd:"",
+    title:"GMCLA Supper & Closing Dance Party",
+    desc:"Exclusively for GMCLA members, fully paid guests, and London GMC members — not an open club event. Buffet, wine, beer and soda provided. Mixed drinks available for purchase. There is a sign and buzzer at the entrance; cloakroom and lift access are available on the top floor.",
+    location:"Century Club | 61–63 Shaftesbury Avenue, London W1D 6LQ",
+    transit:""
+  },
+
+  /* ── SUNDAY AUGUST 9 – Departure ── */
+  {
+    day:"2026-08-09", sort:480, category:"optional",
+    time:"All Day", timeEnd:"",
+    title:"Departures",
+    desc:"Safe travels! Depart according to your individual plans. What an extraordinary tour.",
+    location:"London (various departure points)", transit:""
+  },
+];
+
+
+/* ════════════════════════════════════════════
+   STATE
+   ════════════════════════════════════════════ */
+let selectedDay = DAYS[0].key;
+let selectedCat = "all";
+
+function toggleAttire() {
+  const btn  = document.getElementById("attireToggle");
+  const body = document.getElementById("attireBody");
+  const open = body.classList.toggle("open");
+  btn.classList.toggle("open", open);
+  btn.querySelector("span").textContent = open
+    ? "👔 Attire Guide — tap to collapse"
+    : "👔 Attire Guide — tap to expand";
+}
+
+/* ════════════════════════════════════════════
+   HELPERS
+   ════════════════════════════════════════════ */
+const catMap   = Object.fromEntries(CATEGORIES.map(c => [c.key, c]));
+const dayMap   = Object.fromEntries(DAYS.map(d => [d.key, d]));
+const PIN_SVG  = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`;
+const TRAM_SVG = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="14" rx="2"/><path d="M6 10h12M8 22l2-4M16 22l-2-4M9 6h1M14 6h1"/><path d="M6 16l-2 4M18 16l2 4"/></svg>`;
+
+/* ════════════════════════════════════════════
+   RENDER
+   ════════════════════════════════════════════ */
+function buildDayScroller() {
+  const scroller = document.getElementById("dayScroller");
+  scroller.innerHTML = "";
+  DAYS.forEach(d => {
+    const btn = document.createElement("button");
+    btn.className = `day-btn city-${d.city}` + (d.key === selectedDay ? " active" : "");
+    btn.innerHTML = `
+      <span class="btn-weekday">${d.weekday}</span>
+      <span class="btn-date">${d.date}</span>
+      <span class="btn-city">${d.cityLabel}</span>`;
+    btn.addEventListener("click", () => {
+      selectedDay = d.key;
+      renderAll();
+      btn.scrollIntoView({ behavior:"smooth", block:"nearest", inline:"center" });
+    });
+    scroller.appendChild(btn);
+  });
+}
+
+function buildCatSelect() {
+  const sel = document.getElementById("catSelect");
+  sel.innerHTML = "";
+  CATEGORIES.forEach(c => {
+    const opt = document.createElement("option");
+    opt.value = c.key;
+    opt.textContent = c.label;
+    sel.appendChild(opt);
+  });
+  sel.value = selectedCat;
+  sel.addEventListener("change", e => { selectedCat = e.target.value; renderEvents(); });
+}
+
+function buildLegend() {
+  const el = document.getElementById("legend");
+  el.innerHTML = `
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#b45309"></div>
+      <span>★ Required</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#9ca3af"></div>
+      <span>Not Required</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#1d4ed8"></div>
+      <span>Amsterdam</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#7c3aed"></div>
+      <span>London</span>
+    </div>`;
+}
+
+function renderDayTheme() {
+  const day = dayMap[selectedDay];
+  if (!day) return;
+  const el = document.getElementById("dayTheme");
+  el.innerHTML = `
+    <div class="day-theme-left">
+      <div class="day-theme-label">Schedule</div>
+      <div class="day-theme-name">${day.theme}</div>
+      <div class="day-theme-date">${day.label}</div>
+    </div>
+    <div class="city-badge ${day.city}">${day.cityLabel}</div>`;
+}
+
+function renderEvents() {
+  const list = document.getElementById("eventList");
+
+  // Sync day buttons
+  document.querySelectorAll(".day-btn").forEach((btn, i) => {
+    btn.classList.toggle("active", DAYS[i].key === selectedDay);
+  });
+  document.getElementById("catSelect").value = selectedCat;
+
+  const events = SCHEDULE
+    .filter(e => e.day === selectedDay && (selectedCat === "all" || e.category === selectedCat))
+    .sort((a, b) => a.sort - b.sort);
+
+  if (events.length === 0) {
+    list.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">🎵</div>
+        <div class="empty-state-text">No events found</div>
+        <div class="empty-state-sub">Try selecting a different category or day</div>
+      </div>`;
+    return;
+  }
+
+  list.innerHTML = events.map(e => {
+    const isReq    = e.category === "required";
+    const badgeTxt = isReq ? '<em class="star-icon">★</em> Required' : 'Not Required';
+    const timeEnd  = e.timeEnd ? `<div class="event-time-end">${e.timeEnd}</div>` : "";
+    const loc      = e.location
+      ? `<div class="event-location">${PIN_SVG} <span>${e.location.replace(/\n/g,"<br>")}</span></div>`
+      : "";
+    const transit  = e.transit
+      ? `<div class="event-transit">${TRAM_SVG} ${e.transit}</div>`
+      : "";
+    return `
+      <div class="event-card cat-${e.category}">
+        <div class="event-accent"></div>
+        <div class="event-time">
+          <div class="event-time-inner">
+            <div class="event-time-start">${e.time}</div>
+            ${timeEnd}
+          </div>
+        </div>
+        <div class="event-divider"></div>
+        <div class="event-body">
+          <div class="event-badge">${badgeTxt}</div>
+          <div class="event-title">${e.title}</div>
+          <div class="event-desc">${e.desc}</div>
+          ${loc}${transit}
+        </div>
+      </div>`;
+  }).join("");
+}
+
+function renderAll() {
+  buildDayScroller();
+  renderDayTheme();
+  renderEvents();
+}
+
+/* ════════════════════════════════════════════
+   INIT
+   ════════════════════════════════════════════ */
+buildCatSelect();
+buildLegend();
+renderAll();
+
+requestAnimationFrame(() => {
+  const active = document.querySelector(".day-btn.active");
+  if (active) active.scrollIntoView({ block:"nearest", inline:"center" });
+});
+
+/* ════════════════════════════════════════════
+   HOMESCREEN ICON
+   ════════════════════════════════════════════ */
+(function () {
+  function makeIconDataUrl(size) {
+    const c = document.createElement("canvas");
+    c.width = c.height = size;
+    const ctx = c.getContext("2d");
+
+    // Full-bleed background — iOS clips corners automatically
+    ctx.fillStyle = "#0f172a";
+    ctx.fillRect(0, 0, size, size);
+
+    // Measure emoji at probe size then scale to fill ~88%
+    const probe = size * 2;
+    ctx.font = probe + "px serif";
+    ctx.textBaseline = "alphabetic";
+    ctx.textAlign = "left";
+    const m = ctx.measureText("🎵");
+    const emojiW = m.actualBoundingBoxRight  - m.actualBoundingBoxLeft || m.width;
+    const emojiH = (m.actualBoundingBoxAscent + m.actualBoundingBoxDescent) || probe * 0.9;
+    const scale  = (size * 0.88) / Math.max(emojiW, emojiH);
+    const fs     = probe * scale;
+    const drawW  = emojiW * scale;
+    const drawH  = emojiH * scale;
+    const x = (size - drawW) / 2 - (m.actualBoundingBoxLeft * scale);
+    const y = (size + drawH) / 2 - (m.actualBoundingBoxDescent * scale);
+
+    ctx.font = fs + "px serif";
+    ctx.textBaseline = "alphabetic";
+    ctx.textAlign = "left";
+    ctx.fillText("🎵", x, y);
+    return c.toDataURL("image/png");
+  }
+
+  const icon512 = makeIconDataUrl(512);
+  const icon192 = makeIconDataUrl(192);
+  const icon180 = makeIconDataUrl(180);
+
+  document.getElementById("apple-touch-icon").href = icon180;
+  document.getElementById("favicon").href = icon512;
+
+  const manifest = {
+    name: "GMCLA WorldPride & London Tour",
+    short_name: "GMCLA Tour",
+    description: "GMCLA WorldPride & London Tour 2026 — Full Itinerary",
+    start_url: ".",
+    display: "standalone",
+    orientation: "portrait",
+    background_color: "#0f172a",
+    theme_color: "#0f172a",
+    icons: [
+      { src: icon192, sizes: "192x192", type: "image/png" },
+      { src: icon512, sizes: "512x512", type: "image/png", purpose: "any maskable" }
+    ]
+  };
+  const blob = new Blob([JSON.stringify(manifest)], { type:"application/manifest+json" });
+  const link = document.createElement("link");
+  link.rel = "manifest";
+  link.href = URL.createObjectURL(blob);
+  document.head.appendChild(link);
+})();
+</script>
+</body>
+</html>
