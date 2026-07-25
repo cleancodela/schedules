@@ -462,7 +462,7 @@
 <header class="header">
   <div class="logo-box">
     <div class="logo-flag">🏳️‍🌈</div>
-    <div class="logo-title">Amsterdam xx WorldPride 2026</div>
+    <div class="logo-title">Amsterdam WorldPride 2026</div>
     <div class="logo-subtitle">Fellow‑Ship Travel Guide</div>
   </div>
 </header>
@@ -1208,27 +1208,37 @@ requestAnimationFrame(() => {
     c.width = c.height = size;
     const ctx = c.getContext("2d");
 
-    // Rounded dark background matching the header
-    const r = size * 0.22;
-    ctx.beginPath();
-    ctx.moveTo(r, 0);
-    ctx.lineTo(size - r, 0);
-    ctx.quadraticCurveTo(size, 0, size, r);
-    ctx.lineTo(size, size - r);
-    ctx.quadraticCurveTo(size, size, size - r, size);
-    ctx.lineTo(r, size);
-    ctx.quadraticCurveTo(0, size, 0, size - r);
-    ctx.lineTo(0, r);
-    ctx.quadraticCurveTo(0, 0, r, 0);
-    ctx.closePath();
+    // Full-bleed dark background — iOS applies its own corner mask for
+    // apple-touch-icon so we don't add rounding ourselves (that's what
+    // was clipping the flag edges).
     ctx.fillStyle = "#1a1a2e";
-    ctx.fill();
+    ctx.fillRect(0, 0, size, size);
 
-    // Rainbow flag emoji centred
-    ctx.font = (size * 0.62) + "px serif";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText("🏳️\u200d🌈", size / 2, size / 2 + size * 0.03);
+    // Measure the emoji so we can scale it to fill ~90% of the canvas.
+    // Start with a large probe size, then scale down to the target.
+    const probe = size * 2;
+    ctx.font = probe + "px serif";
+    ctx.textBaseline = "alphabetic";
+    ctx.textAlign = "left";
+    const m = ctx.measureText("🏳️\u200d🌈");
+    const emojiW = m.actualBoundingBoxRight - m.actualBoundingBoxLeft  || m.width;
+    const emojiH = (m.actualBoundingBoxAscent + m.actualBoundingBoxDescent) || probe * 0.9;
+
+    // Scale so the wider dimension fits within 90% of the canvas
+    const maxDim = Math.max(emojiW, emojiH);
+    const scale  = (size * 0.90) / maxDim;
+    const fs     = probe * scale;
+
+    // Draw centred
+    const drawW = emojiW * scale;
+    const drawH = emojiH * scale;
+    const x = (size - drawW) / 2 - (m.actualBoundingBoxLeft * scale);
+    const y = (size + drawH) / 2 - (m.actualBoundingBoxDescent * scale);
+
+    ctx.font = fs + "px serif";
+    ctx.textBaseline = "alphabetic";
+    ctx.textAlign = "left";
+    ctx.fillText("🏳️\u200d🌈", x, y);
 
     return c.toDataURL("image/png");
   }
