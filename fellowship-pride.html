@@ -399,6 +399,7 @@
       text-underline-offset: 2px;
     }
     .event-location a:hover { opacity: .75; }
+    .loc-extra { font-size: .9em; opacity: .8; }
 
     /* Empty state */
     .empty-state {
@@ -1075,6 +1076,47 @@ function catLabel(key) {
 
 const PIN_SVG = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`;
 
+/* ─── Location rendering helpers ──────────────────────────── */
+var _NON_LINKABLE = /\btbd\b|\bvarious\b|\brsvp\b|official.*calendar/i;
+var _BARE_CITY    = /^(London|Amsterdam)$/i;
+function _isTransit(s){ return /^\s*(tram|metro|bus|tube|train)\s/i.test(s) || s.indexOf('·') !== -1; }
+function _mapsA(display, query){
+  return '<a href="https://maps.google.com/?q=' + encodeURIComponent((query||display).trim()) +
+         '" target="_blank" rel="noopener noreferrer">' + display.trim() + '</a>';
+}
+function _renderLocLine(line){
+  var t = line.trim();
+  if (!t) return '';
+  if (_NON_LINKABLE.test(t) || _BARE_CITY.test(t) || _isTransit(t)) return t;
+  // Route arrows: "Route: Dam Square → Vondelpark"
+  if (t.indexOf(' → ') !== -1){
+    return t.replace(/^route:\s*/i,'').split(' → ').map(function(p){ return _mapsA(p.trim()); }).join(' → ');
+  }
+  // Multi-venue: "Vondelpark, Leidseplein &/or Rijksmuseum — Amsterdam"
+  if (t.indexOf(' &/or ') !== -1){
+    var city = '';
+    var em = t.indexOf(' — ');
+    if (em !== -1){ city = ', ' + t.slice(em + 3); t = t.slice(0, em); }
+    return t.split(/,\s*| &\/or /).filter(function(p){ return p.trim(); }).map(function(p){
+      return _mapsA(p.trim(), p.trim() + city);
+    }).join(', ');
+  }
+  // "Venue | Address | Contact: ..." — use best non-contact segment for Maps search
+  if (t.indexOf(' | ') !== -1){
+    var segs = t.split(' | ');
+    var addr = segs.filter(function(s){ return !/^contact:/i.test(s); }).pop() || segs[0];
+    return _mapsA(t, addr);
+  }
+  return _mapsA(t);
+}
+function renderLocation(raw){
+  if (!raw) return '';
+  return raw.split('\n').map(function(line, i){
+    if (!line.trim()) return '';
+    var html = _renderLocLine(line);
+    return i > 0 ? '<span class="loc-extra">' + html + '</span>' : html;
+  }).filter(Boolean).join('<br>');
+}
 
 /* ════════════════════════════════════════════
    RENDER
@@ -1163,7 +1205,7 @@ function renderEvents() {
   list.innerHTML = events.map(e => {
     const timeEndStr = e.timeEnd ? `<div class="event-time-end">${e.timeEnd}</div>` : "";
     const locStr = e.location
-      ? `<div class="event-location">${PIN_SVG} <a href="https://maps.google.com/?q=${encodeURIComponent(e.location)}" target="_blank" rel="noopener noreferrer">${e.location}</a></div>`
+      ? `<div class="event-location">${PIN_SVG} <span>${renderLocation(e.location)}</span></div>`
       : "";
     return `
       <div class="event-card cat-${e.category}">
