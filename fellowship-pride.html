@@ -401,6 +401,14 @@
     .event-location a:hover { opacity: .75; }
     .loc-extra { font-size: .9em; opacity: .8; }
 
+    /* ── Day slide animations ── */
+    @keyframes _dayOut  { to   { opacity:0; } }
+    @keyframes _dayInR  { from { opacity:0; transform:translateX(44px);  } to { opacity:1; transform:none; } }
+    @keyframes _dayInL  { from { opacity:0; transform:translateX(-44px); } to { opacity:1; transform:none; } }
+    .day-exit        { animation: _dayOut 120ms ease-in  both; pointer-events:none; }
+    .day-enter-right { animation: _dayInR 220ms ease-out both; }
+    .day-enter-left  { animation: _dayInL 220ms ease-out both; }
+
     /* Empty state */
     .empty-state {
       text-align: center;
@@ -1129,10 +1137,9 @@ function buildDayScroller() {
     btn.className = "day-btn" + (d.key === selectedDay ? " active" : "");
     btn.innerHTML = `<span class="btn-weekday">${d.weekday}</span><span class="btn-date">${d.date}</span>`;
     btn.addEventListener("click", () => {
-      selectedDay = d.key;
-      renderAll();
-      // Scroll the clicked button into view
-      btn.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      const nIdx = DAYS.findIndex(d2 => d2.key === d.key);
+      const cIdx = DAYS.findIndex(d2 => d2.key === selectedDay);
+      navigateToDay(d.key, nIdx >= cIdx ? "forward" : "backward");
     });
     scroller.appendChild(btn);
   });
@@ -1227,6 +1234,32 @@ function renderEvents() {
   }).join("");
 }
 
+/* ── Animated day navigation ── */
+let _dayAnimating = false;
+function navigateToDay(newKey, direction) {
+  if (_dayAnimating || newKey === selectedDay) return;
+  _dayAnimating = true;
+  const list  = document.getElementById("eventList");
+  const theme = document.getElementById("dayTheme");
+  const enter = direction === "forward" ? "day-enter-right" : "day-enter-left";
+  [list, theme].forEach(el => el && el.classList.add("day-exit"));
+  setTimeout(() => {
+    selectedDay = newKey;
+    [list, theme].forEach(el => el && el.classList.remove("day-exit"));
+    renderAll();
+    list.offsetHeight; // force reflow so enter animation fires fresh
+    [list, theme].forEach(el => el && el.classList.add(enter));
+    requestAnimationFrame(() => {
+      const active = document.querySelector(".day-btn.active");
+      if (active) active.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    });
+    setTimeout(() => {
+      [list, theme].forEach(el => el && el.classList.remove(enter));
+      _dayAnimating = false;
+    }, 240);
+  }, 130);
+}
+
 function renderAll() {
   buildDayScroller();
   renderDayTheme();
@@ -1266,17 +1299,10 @@ requestAnimationFrame(() => {
 
     const idx = DAYS.findIndex(d => d.key === selectedDay);
     if (dx < 0 && idx < DAYS.length - 1) {
-      selectedDay = DAYS[idx + 1].key; // swipe left → next day
+      navigateToDay(DAYS[idx + 1].key, "forward");
     } else if (dx > 0 && idx > 0) {
-      selectedDay = DAYS[idx - 1].key; // swipe right → previous day
-    } else {
-      return;
+      navigateToDay(DAYS[idx - 1].key, "backward");
     }
-    renderAll();
-    requestAnimationFrame(() => {
-      const active = document.querySelector(".day-btn.active");
-      if (active) active.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-    });
   }, { passive: true });
 })();
 

@@ -279,6 +279,14 @@
     }
     .event-location a:hover { opacity: .75; }
     .loc-extra { font-size: .9em; opacity: .8; }
+
+    /* ── Day slide animations ── */
+    @keyframes _dayOut  { to   { opacity:0; } }
+    @keyframes _dayInR  { from { opacity:0; transform:translateX(44px);  } to { opacity:1; transform:none; } }
+    @keyframes _dayInL  { from { opacity:0; transform:translateX(-44px); } to { opacity:1; transform:none; } }
+    .day-exit        { animation: _dayOut 120ms ease-in  both; pointer-events:none; }
+    .day-enter-right { animation: _dayInR 220ms ease-out both; }
+    .day-enter-left  { animation: _dayInL 220ms ease-out both; }
     .event-transit  { font-size: 11px; color: var(--text-muted); margin-top: 4px; line-height: 1.5; }
 
     /* Empty state */
@@ -393,8 +401,8 @@ const SCHEDULE = [
     day:"2026-07-31", sort:960, category:"required",
     time:"4:00 PM", timeEnd:"6:00 PM",
     title:"Welcome & Reception with Queer Voices Unite",
-    desc:"Our first gathering of the tour — meet the international choruses and kick off the WorldPride week together.",
-    location:"Museum H'ART Amsterdam | Amstel 51, 1018 EJ Amsterdam\nTram 14 & Metro 51/53/54 → Waterlooplein · Tram 1/7/19 → Weesperplein"
+    desc:"Our first gathering of the tour — meet the international choruses and kick off the WorldPride week together. Enter via the backdoor on Singel.",
+    location:"Singelkerk | Singel 452, 1017 AW Amsterdam\nTram 1/2/5 → Koningsplein · Tram 13/14/17 → Westermarkt"
   },
   {
     day:"2026-07-31", sort:1200, category:"optional",
@@ -414,7 +422,7 @@ const SCHEDULE = [
   },
   {
     day:"2026-08-01", sort:720, category:"required",
-    time:"12:00 PM", timeEnd:"7:00 PM",
+    time:"12:00 PM", timeEnd:"6:00 PM",
     title:"Canal Pride Parade Viewing & Performances",
     desc:"Choruses gather to watch the parade together in the park. Come and go as you please to socialize with chorus members from around the world. Bring your own food or purchase at food stands along the route.",
     location:"Canal Parade route — Amsterdam"
@@ -458,7 +466,7 @@ const SCHEDULE = [
   },
   {
     day:"2026-08-02", sort:1140, category:"optional",
-    time:"7:00 PM", timeEnd:"",
+    time:"7:00 PM", timeEnd:"9:00 PM",
     title:"GMCLA Group Dinner at BLIK Amsterdam",
     desc:"Group dinner with a pre-fix menu including multiple options, wine and beer.",
     location:"BLIK Amsterdam | 9V8R+G4 Amsterdam, Netherlands"
@@ -467,7 +475,7 @@ const SCHEDULE = [
   /* ── MONDAY AUGUST 3 ── */
   {
     day:"2026-08-03", sort:750, category:"required",
-    time:"12:30 PM", timeEnd:"",
+    time:"12:30 PM", timeEnd:"4:30 PM",
     title:"Sound Check & Rehearsal — Concertgebouw",
     desc:"Rehearsal in the main hall ahead of tonight's concert. Artist entrance: Jan Willem Brouwersstraat 1.",
     location:"Concertgebouw | Concertgebouwplein 10, 1071 LH Amsterdam\nTram 5/12/24 → Concertgebouw · Tram 1/2/7/19 → Rijksmuseum · Tram 25 → Roelof Hartplein"
@@ -488,14 +496,14 @@ const SCHEDULE = [
   },
   {
     day:"2026-08-03", sort:1140, category:"required",
-    time:"7:00 PM", timeEnd:"11:00 PM",
+    time:"8:00 PM", timeEnd:"10:30 PM",
     title:"Concert \u2014 \u201cQueer Voices Unite\u201d at Concertgebouw",
     desc:"7:30–8:50 PM: Dutch Choirs (15-min sets + changeovers). 8:50–10:30 PM: International Choirs — GMCLA's set is approximately 30 minutes. Tickets: concertgebouw.nl",
     location:"Concertgebouw | Concertgebouwplein 10, 1071 LH Amsterdam"
   },
   {
     day:"2026-08-03", sort:1380, category:"optional",
-    time:"Post-Concert", timeEnd:"",
+    time:"10:30 PM", timeEnd:"11:30 PM",
     title:"Optional Afterparty — Paradiso",
     desc:"Continue the evening at Amsterdam's iconic venue, a 10-minute stroll from Concertgebouw. Note: public transport at Leidseplein terminates around 00:30.",
     location:"Paradiso | Weteringschans 6-8, 1017 SG Amsterdam"
@@ -511,9 +519,9 @@ const SCHEDULE = [
   },
   {
     day:"2026-08-04", sort:1020, category:"required",
-    time:"5:00 PM", timeEnd:"10:00 PM",
+    time:"6:30 PM", timeEnd:"10:30 PM",
     title:"Televised WorldPride Conference Performance",
-    desc:"GMCLA performs 1 song at the start of the evening. Members will have a seat to watch the rest of the concert. Guest tickets are not provided — guests must purchase their own.",
+    desc:"Call time: 6:30 PM. GMCLA performs 1 song early in the evening (performance ~7:00 PM). Members have a seat to watch the rest of the concert. Guest tickets are not included — guests must purchase their own.",
     location:"Museumplein, Amsterdam\nTram 1/2/5/7/19/24 → Rijksmuseum · Tram 12 → Concertgebouw"
   },
 
@@ -543,21 +551,21 @@ const SCHEDULE = [
   },
   {
     day:"2026-08-06", sort:590, category:"optional",
-    time:"9:50 AM", timeEnd:"",
+    time:"10:00 AM", timeEnd:"12:30 PM",
     title:"Optional: Foggy London Tour with Martin Kaufman",
-    desc:"A guided London tour led by Martin Kaufman from London GMC. Space is limited — RSVP to Catie to attend.",
+    desc:"A guided London tour led by Martin Kaufman from London GMC. Only ~23 spots available. RSVP to Catie required — do not show up without RSVPing. Meeting point: 9:50 AM at Oxford Circus or Tottenham Court Road Underground Stations.",
     location:"London (RSVP to Catie for meeting point)"
   },
   {
     day:"2026-08-06", sort:900, category:"required",
-    time:"3:00 PM", timeEnd:"6:00 PM",
+    time:"2:00 PM", timeEnd:"6:00 PM",
     title:"Rehearsal — St. Paul's Church (The Actors' Church)",
     desc:"Full rehearsal ahead of the London concert series.",
     location:"St. Paul's Church | Bedford St, London WC2E 9ED"
   },
   {
     day:"2026-08-06", sort:1170, category:"optional",
-    time:"7:30 PM", timeEnd:"",
+    time:"7:30 PM", timeEnd:"10:30 PM",
     title:"Social with London GMC — Duke of Wellington",
     desc:"Casual social with the London Gay Men's Chorus. Not hosted by either chorus — drinks are not provided. This venue does not serve food, so please have dinner before arriving.",
     location:"Duke of Wellington | 77 Wardour St, London W1D 6QA"
@@ -566,51 +574,51 @@ const SCHEDULE = [
   /* ── FRIDAY AUGUST 7 ── */
   {
     day:"2026-08-07", sort:930, category:"required",
-    time:"3:30 PM", timeEnd:"5:00 PM",
+    time:"2:30 PM", timeEnd:"4:30 PM",
     title:"Rehearsal — St. Paul's Church",
     desc:"Final rehearsal before tonight's concert.",
     location:"St. Paul's Church | Bedford St, London WC2E 9ED"
   },
   {
     day:"2026-08-07", sort:1020, category:"optional",
-    time:"5:00 PM", timeEnd:"",
+    time:"5:00 PM", timeEnd:"6:00 PM",
     title:"GMCLA Group Dinner (Pre-Concert)",
-    desc:"Pre-fix dinner with soft drinks. Group A: Cabana, Covent Garden, 5:30–6:30 PM. Group B: Nags Head, Covent Garden, 5:00–6:00 PM.",
+    desc:"Pre-fix dinner with soft drinks. Group A: Cabana, Covent Garden, 5:00–6:00 PM. Group B: Nags Head, Covent Garden, 5:00–6:00 PM.",
     location:"Group A: Cabana | 7 St Giles High St, London WC2H 8AB\nGroup B: Nags Head | 10 James Street, London WC2E 8BT"
   },
   {
     day:"2026-08-07", sort:1170, category:"required",
-    time:"7:30 PM", timeEnd:"",
+    time:"7:30 PM", timeEnd:"9:30 PM",
     title:"London Concert #1 — St. Paul's Church",
-    desc:"First of three London concerts. Concert attire required.",
+    desc:"First of three London concerts. Call time: 6:30 PM. Attire: white outfits.",
     location:"St. Paul's Church | Bedford St, London WC2E 9ED"
   },
 
   /* ── SATURDAY AUGUST 8 ── */
   {
     day:"2026-08-08", sort:870, category:"required",
-    time:"2:30 PM", timeEnd:"",
+    time:"2:30 PM", timeEnd:"5:00 PM",
     title:"London Concert #2 — St. Paul's Church",
-    desc:"Matinée performance. Concert attire required.",
+    desc:"Matinée performance. Call time: 1:30 PM. Attire: white outfits.",
     location:"St. Paul's Church | Bedford St, London WC2E 9ED"
   },
   {
     day:"2026-08-08", sort:1020, category:"optional",
-    time:"5:00 PM", timeEnd:"",
+    time:"5:00 PM", timeEnd:"6:15 PM",
     title:"GMCLA Group Dinner (Pre-Concert #3)",
-    desc:"Pre-fix dinner with soft drinks. Group B: Cabana, Covent Garden, 5:30–6:30 PM. Group A: Crust Bros, Covent Garden, 5:15–6:30 PM.",
+    desc:"Pre-fix dinner with soft drinks. Group B: Cabana, Covent Garden, 5:00–6:00 PM. Group A: Crust Bros, Covent Garden, 5:15–6:15 PM.",
     location:"Group B: Cabana | 7 St Giles High St, London WC2H 8AB\nGroup A: Crust Bros | 29 Bedford St, London WC2E 8JF"
   },
   {
     day:"2026-08-08", sort:1170, category:"required",
-    time:"7:30 PM", timeEnd:"",
+    time:"7:30 PM", timeEnd:"9:30 PM",
     title:"London Concert #3 — St. Paul's Church",
-    desc:"Third and final London concert. Concert attire required.",
+    desc:"Third and final London concert. Call time: 6:30 PM. Attire: white outfit.",
     location:"St. Paul's Church | Bedford St, London WC2E 9ED"
   },
   {
     day:"2026-08-08", sort:1320, category:"required",
-    time:"10:00 PM", timeEnd:"",
+    time:"10:00 PM", timeEnd:"12:00 AM",
     title:"GMCLA Supper & Closing Dance Party",
     desc:"Exclusively for GMCLA members, fully paid guests, and London GMC members — not an open club event. Buffet, wine, beer and soda provided. Mixed drinks available for purchase. Look for the sign and buzzer at the entrance; lift access available on the top floor.",
     location:"Century Club | 61–63 Shaftesbury Avenue, London W1D 6LQ"
@@ -702,9 +710,9 @@ function buildDayScroller() {
       '<span class="btn-date">'    + d.date    + '</span>' +
       '<span class="btn-city">'    + d.cityLabel + '</span>';
     btn.addEventListener("click", function () {
-      selectedDay = d.key;
-      renderAll();
-      btn.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      var nIdx = DAYS.findIndex(function(d2) { return d2.key === d.key; });
+      var cIdx = DAYS.findIndex(function(d2) { return d2.key === selectedDay; });
+      navigateToDay(d.key, nIdx >= cIdx ? "forward" : "backward");
     });
     scroller.appendChild(btn);
   });
@@ -806,6 +814,32 @@ function renderEvents() {
   }).join("");
 }
 
+/* ── Animated day navigation ── */
+var _dayAnimating = false;
+function navigateToDay(newKey, direction) {
+  if (_dayAnimating || newKey === selectedDay) return;
+  _dayAnimating = true;
+  var list  = document.getElementById("eventList");
+  var theme = document.getElementById("dayTheme");
+  var enter = direction === "forward" ? "day-enter-right" : "day-enter-left";
+  [list, theme].forEach(function(el) { if (el) el.classList.add("day-exit"); });
+  setTimeout(function() {
+    selectedDay = newKey;
+    [list, theme].forEach(function(el) { if (el) el.classList.remove("day-exit"); });
+    renderAll();
+    if (list) list.offsetHeight; // force reflow so enter animation fires fresh
+    [list, theme].forEach(function(el) { if (el) el.classList.add(enter); });
+    requestAnimationFrame(function() {
+      var active = document.querySelector(".day-btn.active");
+      if (active) active.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    });
+    setTimeout(function() {
+      [list, theme].forEach(function(el) { if (el) el.classList.remove(enter); });
+      _dayAnimating = false;
+    }, 240);
+  }, 130);
+}
+
 function renderAll() {
   buildDayScroller();
   renderDayTheme();
@@ -858,17 +892,10 @@ requestAnimationFrame(function () {
 
     var idx = DAYS.findIndex(function (d) { return d.key === selectedDay; });
     if (dx < 0 && idx < DAYS.length - 1) {
-      selectedDay = DAYS[idx + 1].key; // swipe left → next day
+      navigateToDay(DAYS[idx + 1].key, "forward");
     } else if (dx > 0 && idx > 0) {
-      selectedDay = DAYS[idx - 1].key; // swipe right → previous day
-    } else {
-      return;
+      navigateToDay(DAYS[idx - 1].key, "backward");
     }
-    renderAll();
-    requestAnimationFrame(function () {
-      var active = document.querySelector(".day-btn.active");
-      if (active) active.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-    });
   }, { passive: true });
 })();
 
