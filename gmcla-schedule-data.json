@@ -1,0 +1,215 @@
+{
+  "syncedAt": "2026-07-25T16:52:33.151Z",
+  "schedule": [
+    {
+      "day": "2026-07-31",
+      "sort": 960,
+      "category": "required",
+      "time": "4 PM",
+      "timeEnd": "6 PM",
+      "title": "Welcome & Reception with Queer Voices Unite",
+      "desc": "Info: There will be a presentation to kick off the event followed by a reception.",
+      "location": "Singelkerk Backdoor entrance: Singel 452, 1017 AW Amsterdam"
+    },
+    {
+      "day": "2026-07-31",
+      "sort": 1080,
+      "category": "optional",
+      "time": "6 PM",
+      "timeEnd": "9 PM",
+      "title": "“There’s No Place Like Home” Bash",
+      "desc": "Info: Not heading off to Europe? Don’t get FOMO and come out to toast our musical family while while they travel to meet cute Dutch guys and make us proud with some fabulous concerts in Amsterdam and London. We will have reserved tables on the outside patio and lots of fellowship that does not involve an airplane.  Bring your plus one and enjoy No Host drinks and food at your expense and if there are enough participants we might get some complimentary pizzas thrown in.  Please RSVP soonest but no later than Wednesday, July 29th, to help with a projected headcount.  See you there!",
+      "location": "Mattie’s Bar & Grill, West Hollywood"
+    },
+    {
+      "day": "2026-08-01",
+      "sort": 720,
+      "category": "required",
+      "time": "12 PM",
+      "timeEnd": "6 PM",
+      "title": "Canal for Parade Viewing (come and go as you please)",
+      "desc": "Info: Choruses will gather to watch the parade together in the park. The parade should start around Noon, but if you want to find a good spot it is recommended you arrive earlier. Please read \nthe web page for information on food (bring your own or purchase at food \nstands along the route), bathrooms, and general info on the parade.  \nSuggested attire: GMCLA tee shirt",
+      "location": "Wertheimpark Anne Frankstraat 172 1011 SX  Amsterdam"
+    },
+    {
+      "day": "2026-08-02",
+      "sort": 720,
+      "category": "required",
+      "time": "12 PM",
+      "timeEnd": "1:30 PM",
+      "title": "Private Boat Tour of Amsterdam",
+      "desc": "Info:",
+      "location": "Blue Boat Company Stadhouderskade 501 1071 ZD Amsterdam"
+    },
+    {
+      "day": "2026-08-02",
+      "sort": 810,
+      "category": "optional",
+      "time": "1:30 PM",
+      "timeEnd": "3 PM",
+      "title": "Picnic in the park",
+      "desc": "Info:",
+      "location": "Vondelpark, Amsterdam, on walking  distance from Blue Boat Company & Keizersgrachtkerk"
+    },
+    {
+      "day": "2026-08-02",
+      "sort": 900,
+      "category": "required",
+      "time": "3 PM",
+      "timeEnd": "5 PM",
+      "title": "Public Acapella Singing in Amsterdam with Choruses",
+      "desc": "Info: Walking around with other Chorus' and singing in public areas. Suggested attire: GMCLA tee shirt",
+      "location": "Leidseplein, Max  Euweplein and/or Rijksmuseum"
+    },
+    {
+      "day": "2026-08-02",
+      "sort": 1140,
+      "category": "optional",
+      "time": "7 PM",
+      "timeEnd": "9 PM",
+      "title": "GMCLA-hosted Group Dinner at BLIK Amsterdam",
+      "desc": "Info: Pre-fix menu with multiple options, including wine and beer",
+      "location": "9V8R+G4 Amsterdam, Netherlands"
+    },
+    {
+      "day": "2026-08-03",
+      "sort": 750,
+      "category": "required",
+      "time": "12:30 PM",
+      "timeEnd": "4:30 PM",
+      "title": "Sound Check and Rehearsal at Concertgebouw",
+      "desc": "Info: Dressing and rehearsal room in Concertgebouw are in Choir Hall (Koorzaal)",
+      "location": "- Concertgebouw Main Hall Artist entrance: Jan Willem  Brouwersstraat 1 Concertgebouwplein 10, 1071 LH Amsterdam, Netherlands"
+    },
+    {
+      "day": "2026-08-03",
+      "sort": 1200,
+      "category": "required",
+      "time": "8 PM",
+      "timeEnd": "10 PM",
+      "title": "Concert at the Concertgebouw “Queer Voices Unite”",
+      "desc": "Call time: 6 PM\nInfo:  Link to purchase tickets- \nhttps://www.concertgebouw.nl/concerten/42276321-korenfestival\nqueer-voices-unite \no 7:30 – 8:50 PM: Dutch Choirs (15 min sets + changeovers) \no 8:50 – 10:30 PM: International Choirs (25 min sets + changeovers) \n▪ GMCLA’s set: ~30 minutes",
+      "location": "1 Concertgebouwplein 10, 1071 LH Amsterdam, Netherlands"
+    },
+    {
+      "day": "2026-08-03",
+      "sort": 1350,
+      "category": "optional",
+      "time": "10:30 PM",
+      "timeEnd": "11:30 PM",
+      "title": "Afterparty at Paradiso",
+      "desc": "Info:",
+      "location": "Weteringschans 6-8 1017 SG Amsterdam"
+    },
+    {
+      "day": "2026-08-04",
+      "sort": 1110,
+      "category": "required",
+      "time": "6:30 PM",
+      "timeEnd": "10:30 PM",
+      "title": "World Pride Opening ★ Televised World Pride Conference",
+      "desc": "Info: TBD: Sound check- please keep your day open and flexible until we know the sound \ncheck time.  \n• 6:30 PM – Call\n7:00 PM: Performance- We will perform 1 song early in the evening. \nPlease note: tickets are not included in guest fees. If you wish to purchase your own \ntickets to watch the concert after we perform, please do so using this link Performance https://pride.amsterdam/en/event/unity-concert",
+      "location": "Museumplein, Amsterdam"
+    },
+    {
+      "day": "2026-08-06",
+      "sort": 600,
+      "category": "optional",
+      "time": "10 AM",
+      "timeEnd": "12:30 PM",
+      "title": "A Foggy Day in London town Walking Tour- Previous RSVP Required",
+      "desc": "Call time: 9:50 AM\nInfo: London Walking Tour hosted by a LGMC member, Martin Kaufman. \nOnly 23 spots available for GMCLA, a few spots are still available. Please email Catie if you are interested in participating. Please do not show up to the tour if you have not RSVPed.",
+      "location": "Oxford Circus or Tottenham Court Road Underground Stations"
+    },
+    {
+      "day": "2026-08-06",
+      "sort": 840,
+      "category": "required",
+      "time": "2 PM",
+      "timeEnd": "6 PM",
+      "title": "Rehearsal at St. Paul’s Church (The Actors' Church)",
+      "desc": "Info:",
+      "location": "St.Paul's Church Bedford St, London WC2E 9ED, United Kingdom"
+    },
+    {
+      "day": "2026-08-06",
+      "sort": 1170,
+      "category": "optional",
+      "time": "7:30 PM",
+      "timeEnd": "10:30 PM",
+      "title": "Social with London GMC",
+      "desc": "Info:",
+      "location": "Duke of Wellington- 77 Wardour St, London W1D 6QA, United Kingdom"
+    },
+    {
+      "day": "2026-08-07",
+      "sort": 870,
+      "category": "required",
+      "time": "2:30 PM",
+      "timeEnd": "4:30 PM",
+      "title": "Rehearsal at St. Paul’s Church",
+      "desc": "Info:",
+      "location": "St. Paul's Church  Bedford St, London WC2E 9ED, United Kingdom"
+    },
+    {
+      "day": "2026-08-07",
+      "sort": 1020,
+      "category": "optional",
+      "time": "5 PM",
+      "timeEnd": "6 PM",
+      "title": "Hosted Dinner",
+      "desc": "Info: 5:00-6:00pm Group A- Cabana, Covent Garden 7 St Giles High St, \nLondon WC2H 8AB \n5-6pm Group B- Nags Head, Covent Garden10 James Street, London \nWC2E 8BT",
+      "location": ""
+    },
+    {
+      "day": "2026-08-07",
+      "sort": 1170,
+      "category": "required",
+      "time": "7:30 PM",
+      "timeEnd": "9:30 PM",
+      "title": "London Show #1",
+      "desc": "Call time: 6:30 PM\nInfo: Attire: White outfits",
+      "location": "Bedford St, London WC2E 9ED, United Kingdom"
+    },
+    {
+      "day": "2026-08-08",
+      "sort": 870,
+      "category": "required",
+      "time": "2:30 PM",
+      "timeEnd": "5 PM",
+      "title": "London Concert #2 – St. Paul’s Church",
+      "desc": "Call time: 1:30 PM\nInfo: Attire: White Outfits",
+      "location": "Bedford St, London WC2E 9ED, United Kingdom"
+    },
+    {
+      "day": "2026-08-08",
+      "sort": 1020,
+      "category": "optional",
+      "time": "5 PM",
+      "timeEnd": "6 PM",
+      "title": "Hosted Dinner",
+      "desc": "Info: 5:00- 6:00pm Group B- Cabana, Covent Garden 7 St Giles High St, \nLondon WC2H 8AB \n5:15- 6:15pm Group A- Crust Bros, Covent Garden 29 Bedford St, \nLondon WC2E 8JF",
+      "location": ""
+    },
+    {
+      "day": "2026-08-08",
+      "sort": 1170,
+      "category": "required",
+      "time": "7:30 PM",
+      "timeEnd": "9:30 PM",
+      "title": "London Concert #3",
+      "desc": "Call time: 6:30 PM\nInfo: Attire: White outfit",
+      "location": "Bedford St, London WC2E 9ED, United Kingdom"
+    },
+    {
+      "day": "2026-08-08",
+      "sort": 1320,
+      "category": "required",
+      "time": "10 PM",
+      "timeEnd": "12 AM",
+      "title": "Closing Dance Party",
+      "desc": "Info:  Closing Dance Party Buffet, wine, beer and soda are \nprovided. Mixed drinks will be available for purchase. \nGetting in- There is a sign and buzzer where guests should buzz to be let in. There \nwill be a cloakroom for our use on the top floor, where our space is \nlocated. There is also lift access.",
+      "location": "Century Club. The full address is 61 - 63 Shaftesbury Avenue,  London W1D 6LQ."
+    }
+  ]
+}

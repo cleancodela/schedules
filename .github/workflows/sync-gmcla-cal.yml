@@ -1,0 +1,36 @@
+name: Sync GMCLA Calendar
+
+on:
+  schedule:
+    # Every 6 hours at :00 — keeps schedule current without hammering the server
+    - cron: '0 */6 * * *'
+  # Allow manual runs from the GitHub Actions tab
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # needed to commit + push
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch calendar and regenerate schedule data
+        run: node scripts/sync-gmcla-cal.js
+
+      - name: Commit if data changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add gmcla-schedule-data.json
+          # Only commit if the file actually changed
+          git diff --staged --quiet || \
+            git commit -m "chore: sync GMCLA calendar data [skip ci]"
+          git push

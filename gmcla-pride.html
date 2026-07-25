@@ -392,253 +392,9 @@ const CATEGORIES = [
   { key:"optional", label:"Not Required",   color:"#9ca3af" },
 ];
 
-// sort: minutes from midnight
-const SCHEDULE = [
-
-  /* ── FRIDAY JULY 31 ── */
-  {
-    day:"2026-07-31", sort:480, category:"optional",
-    time:"Morning", timeEnd:"",
-    title:"Individual Arrivals",
-    desc:"Travel according to your individual plans and get settled in Amsterdam.",
-    location:""
-  },
-  {
-    day:"2026-07-31", sort:960, category:"required",
-    time:"4:00 PM", timeEnd:"6:00 PM",
-    title:"Welcome & Reception with Queer Voices Unite",
-    desc:"Our first gathering of the tour — meet the international choruses and kick off the WorldPride week together. Enter via the backdoor on Singel.",
-    location:"Singelkerk | Singel 452, 1017 AW Amsterdam\nTram 1/2/5 → Koningsplein · Tram 13/14/17 → Westermarkt"
-  },
-  {
-    day:"2026-07-31", sort:1200, category:"optional",
-    time:"Evening", timeEnd:"",
-    title:"Free Evening — Explore Amsterdam",
-    desc:"Explore Amsterdam with the choruses. WorldPride street parties and events are happening across the city all night.",
-    location:"Amsterdam (various)"
-  },
-
-  /* ── SATURDAY AUGUST 1 ── */
-  {
-    day:"2026-08-01", sort:540, category:"optional",
-    time:"9:00 AM", timeEnd:"",
-    title:"Meet at Canal for Parade Viewing",
-    desc:"Gather at Wertheimpark to get a great spot before the parade begins at noon.",
-    location:"Wertheimpark | Anne Frankstraat 172, 1011 SX Amsterdam\nTram 14 → Artis/Holocaustmuseum · Metro 51/53/54 → Waterlooplein"
-  },
-  {
-    day:"2026-08-01", sort:720, category:"required",
-    time:"12:00 PM", timeEnd:"6:00 PM",
-    title:"Canal Pride Parade Viewing & Performances",
-    desc:"Choruses gather to watch the parade together in the park. Come and go as you please to socialize with chorus members from around the world. Bring your own food or purchase at food stands along the route.",
-    location:"Canal Parade route — Amsterdam"
-  },
-  {
-    day:"2026-08-01", sort:1200, category:"optional",
-    time:"Evening", timeEnd:"",
-    title:"Social Night Out",
-    desc:"Continue celebrating with citywide WorldPride events and street parties.",
-    location:"Amsterdam (various)"
-  },
-
-  /* ── SUNDAY AUGUST 2 ── */
-  {
-    day:"2026-08-02", sort:540, category:"optional",
-    time:"9:00 AM", timeEnd:"1:30 PM",
-    title:"Scratch Rehearsal — Queer Voices Unite Church Service (Alternate)",
-    desc:"Up to 10 GMCLA singers may join the Scratch rehearsal to perform in the Pride Church Service 'Unite' instead of the Boat Tour. RSVP to Catie before July 1st if you prefer this option.",
-    location:"Keizersgracht Church | Keizersgracht 566, 1017 EM Amsterdam\nTram 2/17/24 → Keizersgracht · Tram 1/7/19 → Rijksmuseum"
-  },
-  {
-    day:"2026-08-02", sort:720, category:"required",
-    time:"12:00 PM", timeEnd:"1:30 PM",
-    title:"GMCLA Private Boat Tour of Amsterdam",
-    desc:"A private group canal boat tour. All members not participating in the church service will attend this.",
-    location:"Blue Boat Company | Stadhouderskade 501, 1071 ZD Amsterdam\nTram 1/2/5/7/17/19/24 → Leidseplein · Tram 12 → Concertgebouw"
-  },
-  {
-    day:"2026-08-02", sort:810, category:"optional",
-    time:"1:30 PM", timeEnd:"3:00 PM",
-    title:"Picnic in the Park",
-    desc:"Food is provided — please bring your own drink (pick some up at a local market nearby).",
-    location:"Vondelpark, Amsterdam (walking distance from Blue Boat Company & Keizersgrachtkerk)\nTram 1/2/5/7/17/19/24 → Leidseplein · Tram 12 → Van Baerlestraat"
-  },
-  {
-    day:"2026-08-02", sort:900, category:"required",
-    time:"3:00 PM", timeEnd:"5:00 PM",
-    title:"Public A Cappella Singing with Choruses",
-    desc:"Each chorus performs 10–15 minutes at 3 locations. A sound amplifier is available at Vondelpark.",
-    location:"Vondelpark, Leidseplein, Max Euweplein &/or Rijksmuseum — Amsterdam"
-  },
-  {
-    day:"2026-08-02", sort:1140, category:"optional",
-    time:"7:00 PM", timeEnd:"9:00 PM",
-    title:"GMCLA Group Dinner at BLIK Amsterdam",
-    desc:"Group dinner with a pre-fix menu including multiple options, wine and beer.",
-    location:"BLIK Amsterdam | 9V8R+G4 Amsterdam, Netherlands"
-  },
-
-  /* ── MONDAY AUGUST 3 ── */
-  {
-    day:"2026-08-03", sort:750, category:"required",
-    time:"12:30 PM", timeEnd:"4:30 PM",
-    title:"Sound Check & Rehearsal — Concertgebouw",
-    desc:"Rehearsal in the main hall ahead of tonight's concert. Artist entrance: Jan Willem Brouwersstraat 1.",
-    location:"Concertgebouw | Concertgebouwplein 10, 1071 LH Amsterdam\nTram 5/12/24 → Concertgebouw · Tram 1/2/7/19 → Rijksmuseum · Tram 25 → Roelof Hartplein"
-  },
-  {
-    day:"2026-08-03", sort:990, category:"optional",
-    time:"4:30 PM", timeEnd:"",
-    title:"Dinner Break (On Your Own)",
-    desc:"Supermarkets and cafés available near Concertgebouw.",
-    location:"Concertgebouw area, Amsterdam"
-  },
-  {
-    day:"2026-08-03", sort:1080, category:"required",
-    time:"6:00 PM", timeEnd:"",
-    title:"Call Time / Check-In for Concert",
-    desc:"All chorus members check in at the Concertgebouw ahead of the evening's performance.",
-    location:"Concertgebouw | Concertgebouwplein 10, 1071 LH Amsterdam"
-  },
-  {
-    day:"2026-08-03", sort:1140, category:"required",
-    time:"8:00 PM", timeEnd:"10:30 PM",
-    title:"Concert \u2014 \u201cQueer Voices Unite\u201d at Concertgebouw",
-    desc:"7:30–8:50 PM: Dutch Choirs (15-min sets + changeovers). 8:50–10:30 PM: International Choirs — GMCLA's set is approximately 30 minutes. Tickets: concertgebouw.nl",
-    location:"Concertgebouw | Concertgebouwplein 10, 1071 LH Amsterdam"
-  },
-  {
-    day:"2026-08-03", sort:1380, category:"optional",
-    time:"10:30 PM", timeEnd:"11:30 PM",
-    title:"Optional Afterparty — Paradiso",
-    desc:"Continue the evening at Amsterdam's iconic venue, a 10-minute stroll from Concertgebouw. Note: public transport at Leidseplein terminates around 00:30.",
-    location:"Paradiso | Weteringschans 6-8, 1017 SG Amsterdam"
-  },
-
-  /* ── TUESDAY AUGUST 4 ── */
-  {
-    day:"2026-08-04", sort:600, category:"required",
-    time:"TBD", timeEnd:"",
-    title:"Sound Check — Televised WorldPride Performance",
-    desc:"Keep your day open and flexible until the sound check time is confirmed. Details will be communicated as the date approaches.",
-    location:"Museumplein, Amsterdam\nTram 1/2/5/7/19/24 → Rijksmuseum · Tram 12 → Concertgebouw · Tram 25 → Roelof Hartplein"
-  },
-  {
-    day:"2026-08-04", sort:1020, category:"required",
-    time:"6:30 PM", timeEnd:"10:30 PM",
-    title:"Televised WorldPride Conference Performance",
-    desc:"Call time: 6:30 PM. GMCLA performs 1 song early in the evening (performance ~7:00 PM). Members have a seat to watch the rest of the concert. Guest tickets are not included — guests must purchase their own.",
-    location:"Museumplein, Amsterdam\nTram 1/2/5/7/19/24 → Rijksmuseum · Tram 12 → Concertgebouw"
-  },
-
-  /* ── WEDNESDAY AUGUST 5 ── */
-  {
-    day:"2026-08-05", sort:480, category:"optional",
-    time:"Morning", timeEnd:"",
-    title:"Travel to London via Train",
-    desc:"Individual travel plans — coordinate your Eurostar booking to arrive in London in the afternoon.",
-    location:"Amsterdam Centraal → London St. Pancras"
-  },
-  {
-    day:"2026-08-05", sort:840, category:"optional",
-    time:"Afternoon & Evening", timeEnd:"",
-    title:"Free Time in London",
-    desc:"Get settled, explore your neighbourhood, and rest up before rehearsal tomorrow.",
-    location:"London (various)"
-  },
-
-  /* ── THURSDAY AUGUST 6 ── */
-  {
-    day:"2026-08-06", sort:480, category:"optional",
-    time:"Morning", timeEnd:"",
-    title:"Free Time",
-    desc:"Explore London on your own before the afternoon rehearsal.",
-    location:"London"
-  },
-  {
-    day:"2026-08-06", sort:590, category:"optional",
-    time:"10:00 AM", timeEnd:"12:30 PM",
-    title:"Optional: Foggy London Tour with Martin Kaufman",
-    desc:"A guided London tour led by Martin Kaufman from London GMC. Only ~23 spots available. RSVP to Catie required — do not show up without RSVPing. Meeting point: 9:50 AM at Oxford Circus or Tottenham Court Road Underground Stations.",
-    location:"London (RSVP to Catie for meeting point)"
-  },
-  {
-    day:"2026-08-06", sort:900, category:"required",
-    time:"2:00 PM", timeEnd:"6:00 PM",
-    title:"Rehearsal — St. Paul's Church (The Actors' Church)",
-    desc:"Full rehearsal ahead of the London concert series.",
-    location:"St. Paul's Church | Bedford St, London WC2E 9ED"
-  },
-  {
-    day:"2026-08-06", sort:1170, category:"optional",
-    time:"7:30 PM", timeEnd:"10:30 PM",
-    title:"Social with London GMC — Duke of Wellington",
-    desc:"Casual social with the London Gay Men's Chorus. Not hosted by either chorus — drinks are not provided. This venue does not serve food, so please have dinner before arriving.",
-    location:"Duke of Wellington | 77 Wardour St, London W1D 6QA"
-  },
-
-  /* ── FRIDAY AUGUST 7 ── */
-  {
-    day:"2026-08-07", sort:930, category:"required",
-    time:"2:30 PM", timeEnd:"4:30 PM",
-    title:"Rehearsal — St. Paul's Church",
-    desc:"Final rehearsal before tonight's concert.",
-    location:"St. Paul's Church | Bedford St, London WC2E 9ED"
-  },
-  {
-    day:"2026-08-07", sort:1020, category:"optional",
-    time:"5:00 PM", timeEnd:"6:00 PM",
-    title:"GMCLA Group Dinner (Pre-Concert)",
-    desc:"Pre-fix dinner with soft drinks. Group A: Cabana, Covent Garden, 5:00–6:00 PM. Group B: Nags Head, Covent Garden, 5:00–6:00 PM.",
-    location:"Group A: Cabana | 7 St Giles High St, London WC2H 8AB\nGroup B: Nags Head | 10 James Street, London WC2E 8BT"
-  },
-  {
-    day:"2026-08-07", sort:1170, category:"required",
-    time:"7:30 PM", timeEnd:"9:30 PM",
-    title:"London Concert #1 — St. Paul's Church",
-    desc:"First of three London concerts. Call time: 6:30 PM. Attire: white outfits.",
-    location:"St. Paul's Church | Bedford St, London WC2E 9ED"
-  },
-
-  /* ── SATURDAY AUGUST 8 ── */
-  {
-    day:"2026-08-08", sort:870, category:"required",
-    time:"2:30 PM", timeEnd:"5:00 PM",
-    title:"London Concert #2 — St. Paul's Church",
-    desc:"Matinée performance. Call time: 1:30 PM. Attire: white outfits.",
-    location:"St. Paul's Church | Bedford St, London WC2E 9ED"
-  },
-  {
-    day:"2026-08-08", sort:1020, category:"optional",
-    time:"5:00 PM", timeEnd:"6:15 PM",
-    title:"GMCLA Group Dinner (Pre-Concert #3)",
-    desc:"Pre-fix dinner with soft drinks. Group B: Cabana, Covent Garden, 5:00–6:00 PM. Group A: Crust Bros, Covent Garden, 5:15–6:15 PM.",
-    location:"Group B: Cabana | 7 St Giles High St, London WC2H 8AB\nGroup A: Crust Bros | 29 Bedford St, London WC2E 8JF"
-  },
-  {
-    day:"2026-08-08", sort:1170, category:"required",
-    time:"7:30 PM", timeEnd:"9:30 PM",
-    title:"London Concert #3 — St. Paul's Church",
-    desc:"Third and final London concert. Call time: 6:30 PM. Attire: white outfit.",
-    location:"St. Paul's Church | Bedford St, London WC2E 9ED"
-  },
-  {
-    day:"2026-08-08", sort:1320, category:"required",
-    time:"10:00 PM", timeEnd:"12:00 AM",
-    title:"GMCLA Supper & Closing Dance Party",
-    desc:"Exclusively for GMCLA members, fully paid guests, and London GMC members — not an open club event. Buffet, wine, beer and soda provided. Mixed drinks available for purchase. Look for the sign and buzzer at the entrance; lift access available on the top floor.",
-    location:"Century Club | 61–63 Shaftesbury Avenue, London W1D 6LQ"
-  },
-
-  /* ── SUNDAY AUGUST 9 ── */
-  {
-    day:"2026-08-09", sort:480, category:"optional",
-    time:"All Day", timeEnd:"",
-    title:"Departures",
-    desc:"Safe travels! Depart according to your individual plans. What an extraordinary tour.",
-    location:"London (various departure points)"
-  },
-];
+/* SCHEDULE is loaded at runtime from gmcla-schedule-data.json
+   via the fetch() call in the INIT section below.           */
+var SCHEDULE = [];
 
 
 /* ════════════════════════════════════════════
@@ -872,12 +628,42 @@ document.getElementById("attireToggle").addEventListener("click", function () {
    ════════════════════════════════════════════ */
 buildCatSelect();
 buildLegend();
-renderAll();
+// renderAll() is called once data loads (see fetch below)
 
-requestAnimationFrame(function () {
-  const active = document.querySelector(".day-btn.active");
-  if (active) active.scrollIntoView({ block: "nearest", inline: "center" });
-});
+/* Load schedule data from same-origin JSON.
+   The service worker serves from cache instantly on repeat visits,
+   then revalidates in the background and sends DATA_UPDATED if changed. */
+fetch('./gmcla-schedule-data.json')
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    SCHEDULE = Array.isArray(data) ? data : (data.schedule || []);
+    renderAll();
+    requestAnimationFrame(function() {
+      var active = document.querySelector('.day-btn.active');
+      if (active) active.scrollIntoView({ block: 'nearest', inline: 'center' });
+    });
+  })
+  .catch(function() {
+    // Offline with empty cache — render empty state
+    renderAll();
+  });
+
+/* Register service worker for offline support + background data refresh */
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./service-worker.js').catch(function() {});
+  navigator.serviceWorker.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'DATA_UPDATED') {
+      // SW detected new JSON — re-fetch from updated cache and re-render
+      fetch('./gmcla-schedule-data.json')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          SCHEDULE = Array.isArray(data) ? data : (data.schedule || []);
+          renderAll();
+        })
+        .catch(function() {});
+    }
+  });
+}
 
 /* ════════════════════════════════════════════
    SWIPE NAVIGATION
