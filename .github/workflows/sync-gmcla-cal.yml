@@ -2,8 +2,8 @@ name: Sync GMCLA Calendar
 
 on:
   schedule:
-    # Every 6 hours at :00 — keeps schedule current without hammering the server
-    - cron: '0 */6 * * *'
+    # Every hour at :00 — keeps schedule current during the active tour
+    - cron: '0 * * * *'
   # Allow manual runs from the GitHub Actions tab
   workflow_dispatch:
 
