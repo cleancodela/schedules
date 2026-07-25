@@ -839,6 +839,39 @@ requestAnimationFrame(function () {
   if (active) active.scrollIntoView({ block: "nearest", inline: "center" });
 });
 
+/* ════════════════════════════════════════════
+   SWIPE NAVIGATION
+   ════════════════════════════════════════════ */
+(function () {
+  var THRESHOLD = 50;
+  var startX = 0, startY = 0;
+
+  document.addEventListener("touchstart", function (e) {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+
+  document.addEventListener("touchend", function (e) {
+    var dx = e.changedTouches[0].clientX - startX;
+    var dy = e.changedTouches[0].clientY - startY;
+    if (Math.abs(dx) < THRESHOLD || Math.abs(dx) < Math.abs(dy)) return;
+
+    var idx = DAYS.findIndex(function (d) { return d.key === selectedDay; });
+    if (dx < 0 && idx < DAYS.length - 1) {
+      selectedDay = DAYS[idx + 1].key; // swipe left → next day
+    } else if (dx > 0 && idx > 0) {
+      selectedDay = DAYS[idx - 1].key; // swipe right → previous day
+    } else {
+      return;
+    }
+    renderAll();
+    requestAnimationFrame(function () {
+      var active = document.querySelector(".day-btn.active");
+      if (active) active.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    });
+  }, { passive: true });
+})();
+
 
 /* ════════════════════════════════════════════
    HOMESCREEN ICON  — GMCLA logo on white bg

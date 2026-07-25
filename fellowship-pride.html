@@ -1247,6 +1247,40 @@ requestAnimationFrame(() => {
 });
 
 /* ════════════════════════════════════════════
+   SWIPE NAVIGATION
+   ════════════════════════════════════════════ */
+(function () {
+  const THRESHOLD = 50; // minimum px to count as a swipe
+  let startX = 0, startY = 0;
+
+  document.addEventListener("touchstart", function (e) {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+
+  document.addEventListener("touchend", function (e) {
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    // Ignore if too short or more vertical than horizontal
+    if (Math.abs(dx) < THRESHOLD || Math.abs(dx) < Math.abs(dy)) return;
+
+    const idx = DAYS.findIndex(d => d.key === selectedDay);
+    if (dx < 0 && idx < DAYS.length - 1) {
+      selectedDay = DAYS[idx + 1].key; // swipe left → next day
+    } else if (dx > 0 && idx > 0) {
+      selectedDay = DAYS[idx - 1].key; // swipe right → previous day
+    } else {
+      return;
+    }
+    renderAll();
+    requestAnimationFrame(() => {
+      const active = document.querySelector(".day-btn.active");
+      if (active) active.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    });
+  }, { passive: true });
+})();
+
+/* ════════════════════════════════════════════
    HOMESCREEN ICON  — generates a 512×512 PNG
    from the rainbow flag emoji at runtime, then
    wires it up as apple-touch-icon + favicon +
