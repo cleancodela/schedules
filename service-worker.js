@@ -11,7 +11,7 @@
  *   Everything else           → pass-through (no caching)
  */
 
-const CACHE_NAME  = 'gmcla-v1';
+const CACHE_NAME  = 'gmcla-v2';
 const DATA_FILE   = 'gmcla-schedule-data.json';
 const HTML_FILE   = 'gmcla-pride.html';
 
@@ -61,8 +61,11 @@ async function handleDataFile(request) {
   const cache  = await caches.open(CACHE_NAME);
   const cached = await cache.match(request);
 
-  // Background revalidation — don't await
-  revalidate(request, cached, cache);
+  // Background revalidation — don't await.
+  // Pass a CLONE: `cached` itself is returned to the page below and its body
+  // can only be read once. Reading the same Response in revalidate() would
+  // throw "body already used" and silently abort the refresh.
+  revalidate(request, cached ? cached.clone() : null, cache);
 
   // Serve cached copy immediately, or wait for network if not yet cached
   if (cached) return cached;
@@ -85,7 +88,9 @@ async function handleDataFile(request) {
  */
 async function revalidate(request, cached, cache) {
   try {
-    const netRes = await fetch(request);
+    // Bypass the HTTP cache so we always compare against the freshest copy
+    // on the server, not a stale browser-cached response.
+    const netRes = await fetch(request, { cache: 'no-store' });
     if (!netRes.ok) return;
 
     const netText = await netRes.text();

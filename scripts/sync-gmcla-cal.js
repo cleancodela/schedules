@@ -173,7 +173,7 @@ async function main() {
       const dateKey = start.date.replace(/-/g, '');
       if (dateKey < TOUR_START || dateKey > TOUR_END) return null;
       return {
-        rawTitle: (ev['SUMMARY']  || '').trim(),
+        rawTitle: decodeICS(ev['SUMMARY'] || ''),
         start,
         end:      parseDT(ev['DTEND']),
         location: decodeICS(ev['LOCATION']    || ''),
