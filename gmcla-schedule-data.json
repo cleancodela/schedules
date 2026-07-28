@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-07-27T23:05:22.223Z",
+  "syncedAt": "2026-07-28T02:45:33.625Z",
   "schedule": [
     {
       "day": "2026-07-31",
@@ -73,12 +73,12 @@
     },
     {
       "day": "2026-08-03",
-      "sort": 750,
+      "sort": 810,
       "category": "required",
-      "time": "12:30 PM",
-      "timeEnd": "4:30 PM",
+      "time": "1:30 PM",
+      "timeEnd": "5 PM",
       "title": "Sound Check and Rehearsal at Concertgebouw",
-      "desc": "Info: Dressing and rehearsal room in Concertgebouw are in Choir Hall (Koorzaal)",
+      "desc": "Info: Dressing and rehearsal room in Concertgebouw are in Choir Hall (Koorzaal)\n1:30 PM: Check in backstage and go to Choir Hall\n1:50-2:10 PM: Sound check in the Main Hall \n2:15-3:45 PM: Rehearsal in Choir Hall \n4:30- 5:00 PM:  Rehearsal of group number in Main Hall \n5:00-6:30 PM: Dinner Break (on your own at a nearby supermarket/café)",
       "location": "- Concertgebouw Main Hall Artist entrance: Jan Willem  Brouwersstraat 1 Concertgebouwplein 10, 1071 LH Amsterdam, Netherlands"
     },
     {
