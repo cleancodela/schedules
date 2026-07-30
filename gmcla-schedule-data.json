@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-07-30T21:13:53.706Z",
+  "syncedAt": "2026-07-30T23:10:27.502Z",
   "schedule": [
     {
       "day": "2026-07-31",
@@ -8,7 +8,7 @@
       "time": "4 PM",
       "timeEnd": "6 PM",
       "title": "Welcome & Reception with Queer Voices Unite",
-      "desc": "Info: There will be a presentation to kick off the event followed by a reception.",
+      "desc": "Call time: 3:30 PM\nInfo: There will be a presentation to kick off the event followed by a reception.",
       "location": "Singelkerk Backdoor entrance: Singel 452, 1017 AW Amsterdam"
     },
     {
@@ -18,7 +18,7 @@
       "time": "12 PM",
       "timeEnd": "6 PM",
       "title": "Canal for Parade Viewing (come and go as you please)",
-      "desc": "Info: Choruses will gather to watch the parade together in the park. The parade should start around Noon, but if you want to find a good spot it is recommended you arrive earlier. Please read \nthe web page for information on food (bring your own or purchase at food \nstands along the route), bathrooms, and general info on the parade.  \nSuggested attire: GMCLA tee shirt",
+      "desc": "Info: Choruses will gather to watch the parade together in the park. The parade should pass this location around Noon, but it is anticipated to be busy so if you want to find a good spot it is recommended you arrive earlier. Please read \nthe web page for information on food (bring your own or purchase at food \nstands along the route), bathrooms, and general info on the parade.  \nSuggested attire: GMCLA tee shirt",
       "location": "Wertheimpark Anne Frankstraat 172 1011 SX  Amsterdam"
     },
     {
@@ -48,7 +48,7 @@
       "time": "3 PM",
       "timeEnd": "5 PM",
       "title": "Public Acapella Singing in Amsterdam with Choruses",
-      "desc": "Info: Walking around with other Chorus' and singing in public areas. Suggested attire: GMCLA tee shirt",
+      "desc": "Info: Walking around with other Chorus' and singing in public areas. Suggested attire: GMCLA 2026 tour tee shirt",
       "location": "Leidseplein, Max  Euweplein and/or Rijksmuseum"
     },
     {
@@ -73,20 +73,20 @@
     },
     {
       "day": "2026-08-03",
-      "sort": 1200,
+      "sort": 1140,
       "category": "required",
-      "time": "8 PM",
-      "timeEnd": "10 PM",
+      "time": "7 PM",
+      "timeEnd": "11 PM",
       "title": "Concert at the Concertgebouw “Queer Voices Unite”",
-      "desc": "Call time: 6 PM\nInfo:  Link to purchase tickets- \nhttps://www.concertgebouw.nl/concerten/42276321-korenfestival\nqueer-voices-unite \no 7:30 – 8:50 PM: Dutch Choirs (15 min sets + changeovers) \no 8:50 – 10:30 PM: International Choirs (25 min sets + changeovers) \n▪ GMCLA’s set: ~30 minutes",
+      "desc": "Call time: 6:30 PM\nInfo:  Link to purchase tickets- \nhttps://www.concertgebouw.nl/concerten/42276321-korenfestival\nqueer-voices-unite \n▪ GMCLA’s set: ~30 minutes 8:26- 8:51",
       "location": "1 Concertgebouwplein 10, 1071 LH Amsterdam, Netherlands"
     },
     {
       "day": "2026-08-03",
-      "sort": 1350,
+      "sort": 1395,
       "category": "optional",
-      "time": "10:30 PM",
-      "timeEnd": "11:30 PM",
+      "time": "11:15 PM",
+      "timeEnd": "1:30 AM",
       "title": "Afterparty at Paradiso",
       "desc": "Info:",
       "location": "Weteringschans 6-8 1017 SG Amsterdam"
@@ -97,8 +97,8 @@
       "category": "required",
       "time": "6:30 PM",
       "timeEnd": "10:30 PM",
-      "title": "World Pride Opening ★ Televised World Pride Conference",
-      "desc": "Info: TBD: Sound check- please keep your day open and flexible until we know the sound \ncheck time.  \n• 6:30 PM – Call\n7:00 PM: Performance- We will perform 1 song early in the evening. \nPlease note: tickets are not included in guest fees. If you wish to purchase your own \ntickets to watch the concert after we perform, please do so using this link Performance https://pride.amsterdam/en/event/unity-concert",
+      "title": "World Pride Opening Televised World Pride Conference",
+      "desc": "Info: 6:30 PM – Call\n7:00 PM: Performance- We will perform 1 song early in the evening. \nPlease note: tickets are not included in guest fees. If you wish to purchase your own \ntickets to watch the concert after we perform, please do so using this link Performance https://pride.amsterdam/en/event/unity-concert",
       "location": "Museumplein, Amsterdam"
     },
     {
