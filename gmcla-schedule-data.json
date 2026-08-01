@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-08-01T06:32:07.386Z",
+  "syncedAt": "2026-08-01T09:08:03.444Z",
   "schedule": [
     {
       "day": "2026-07-31",
@@ -27,7 +27,7 @@
       "category": "required",
       "time": "12 PM",
       "timeEnd": "1:30 PM",
-      "title": "Private Boat Tour of Amsterdam",
+      "title": "Included Private Boat Tour of Amsterdam",
       "desc": "Info:",
       "location": "Blue Boat Company Stadhouderskade 501 1071 ZD Amsterdam"
     },
@@ -47,8 +47,8 @@
       "category": "required",
       "time": "3 PM",
       "timeEnd": "5 PM",
-      "title": "Public Acapella Singing in Amsterdam with Choruses",
-      "desc": "Info: Walking around with other Chorus' and singing in public areas. Suggested attire: GMCLA 2026 tour tee shirt",
+      "title": "Required Public Acapella Singing in Amsterdam with Choruses",
+      "desc": "Info: Walking around with other Chorus' and singing in public areas. attire: GMCLA 2026 tour tee shirt",
       "location": "Leidseplein, Max  Euweplein and/or Rijksmuseum"
     },
     {
