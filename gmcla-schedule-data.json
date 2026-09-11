@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-09-10T22:59:19.304Z",
+  "syncedAt": "2026-09-11T00:57:46.586Z",
   "schedule": [
     {
       "day": "2026-07-31",
@@ -134,10 +134,10 @@
     {
       "day": "2026-08-07",
       "sort": 870,
-      "category": "optional",
+      "category": "required",
       "time": "2:30 PM",
       "timeEnd": "4:30 PM",
-      "title": "Rehearsal at St. Paul��s Church",
+      "title": "Rehearsal at St. Paul’s Church",
       "desc": "Info:",
       "location": "St. Paul's Church  Bedford St, London WC2E 9ED, United Kingdom"
     },
